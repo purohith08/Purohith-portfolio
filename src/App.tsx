@@ -10,10 +10,13 @@ import { Education } from './components/sections/Education';
 import { InstrumentationWorkshop } from './components/sections/InstrumentationWorkshop';
 import { Contact } from './components/sections/Contact';
 
+import { BiomedicalWorldModal } from './components/scenes/BiomedicalWorldModal';
+
 export const App: React.FC = () => {
   const [is3DActive, setIs3DActive] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [webGLSupported, setWebGLSupported] = useState(true);
+  const [isWorldModalOpen, setIsWorldModalOpen] = useState(false);
 
   // Check WebGL availability and system reduced-motion preference
   useEffect(() => {
@@ -44,7 +47,11 @@ export const App: React.FC = () => {
     <div className="min-h-screen bg-[#F5F3EE] text-[#171916] flex flex-col relative selection:bg-[#315B4C]/15 selection:text-[#171916]">
       
       {/* Editorial Fixed Header */}
-      <Navbar onToggle3D={webGLSupported ? toggle3D : undefined} is3DActive={is3DActive} />
+      <Navbar 
+        onToggle3D={webGLSupported ? toggle3D : undefined} 
+        is3DActive={is3DActive} 
+        onOpenWorld={() => setIsWorldModalOpen(true)}
+      />
 
       {/* Hero Visual Composition */}
       <div className="relative w-full">
@@ -60,7 +67,7 @@ export const App: React.FC = () => {
         </div>
 
         {/* Hero Interactive Overlay */}
-        <Hero />
+        <Hero onExploreClick={() => setIsWorldModalOpen(true)} />
       </div>
 
       {/* Main Professional Sections (5 Connected Exploration Zones) */}
@@ -74,6 +81,21 @@ export const App: React.FC = () => {
 
       {/* Editorial Contact & Colophon */}
       <Contact />
+
+      {/* Playable 3D Biomedical Exploration World Modal */}
+      <BiomedicalWorldModal
+        isOpen={isWorldModalOpen}
+        onClose={() => setIsWorldModalOpen(false)}
+        onSelectStation={(stationId) => {
+          if (stationId === 'instrumentation-workshop') {
+            const el = document.getElementById('instrumentation');
+            el?.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            const el = document.getElementById('work');
+            el?.scrollIntoView({ behavior: 'smooth' });
+          }
+        }}
+      />
 
     </div>
   );

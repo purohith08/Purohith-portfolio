@@ -5,9 +5,10 @@ import { GithubIcon, LinkedinIcon } from '../ui/Icons';
 interface NavbarProps {
   onToggle3D?: () => void;
   is3DActive?: boolean;
+  onOpenWorld?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onToggle3D, is3DActive = true }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onToggle3D, is3DActive = true, onOpenWorld }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -73,6 +74,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggle3D, is3DActive = true })
 
           {/* Actions & Scene Switcher */}
           <div className="hidden md:flex items-center gap-4">
+            {onOpenWorld && (
+              <button
+                onClick={onOpenWorld}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono bg-[#315B4C] text-[#F5F3EE] hover:bg-[#234337] transition-colors cursor-pointer shadow-xs"
+              >
+                <span>Explore 3D World</span>
+              </button>
+            )}
+
             {onToggle3D && (
               <button
                 onClick={onToggle3D}

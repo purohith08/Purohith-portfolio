@@ -39,12 +39,19 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
 
           {/* Recruiter First-Actions */}
           <div className="flex flex-wrap items-center gap-3.5 mb-10">
+            <button
+              onClick={onExploreClick}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-[#315B4C] text-[#F5F3EE] hover:bg-[#234337] text-xs font-semibold tracking-wide transition-colors shadow-sm cursor-pointer"
+            >
+              <Compass className="w-4 h-4 text-[#D9D5CC]" />
+              <span>Explore 3D Biomedical World</span>
+            </button>
+
             <a
               href="#work"
-              onClick={onExploreClick}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-[#171916] text-[#F5F3EE] hover:bg-[#315B4C] text-xs font-semibold tracking-wide transition-colors shadow-xs"
             >
-              <span>Explore Selected Work</span>
+              <span>Selected Work</span>
               <ArrowDownRight className="w-3.5 h-3.5" />
             </a>
 
