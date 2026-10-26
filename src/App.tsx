@@ -10,13 +10,13 @@ import { Education } from './components/sections/Education';
 import { InstrumentationWorkshop } from './components/sections/InstrumentationWorkshop';
 import { Contact } from './components/sections/Contact';
 
-import { BiomedicalWorldModal } from './components/scenes/BiomedicalWorldModal';
+import { CampusWorldExperience } from './components/scenes/CampusWorldExperience';
 
 export const App: React.FC = () => {
   const [is3DActive, setIs3DActive] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [webGLSupported, setWebGLSupported] = useState(true);
-  const [isWorldModalOpen, setIsWorldModalOpen] = useState(false);
+  const [isCampusWorldOpen, setIsCampusWorldOpen] = useState(false);
 
   // Check WebGL availability and system reduced-motion preference
   useEffect(() => {
@@ -50,7 +50,7 @@ export const App: React.FC = () => {
       <Navbar 
         onToggle3D={webGLSupported ? toggle3D : undefined} 
         is3DActive={is3DActive} 
-        onOpenWorld={() => setIsWorldModalOpen(true)}
+        onOpenWorld={() => setIsCampusWorldOpen(true)}
       />
 
       {/* Hero Visual Composition */}
@@ -67,7 +67,7 @@ export const App: React.FC = () => {
         </div>
 
         {/* Hero Interactive Overlay */}
-        <Hero onExploreClick={() => setIsWorldModalOpen(true)} />
+        <Hero onExploreClick={() => setIsCampusWorldOpen(true)} />
       </div>
 
       {/* Main Professional Sections (5 Connected Exploration Zones) */}
@@ -82,17 +82,19 @@ export const App: React.FC = () => {
       {/* Editorial Contact & Colophon */}
       <Contact />
 
-      {/* Playable 3D Biomedical Exploration World Modal */}
-      <BiomedicalWorldModal
-        isOpen={isWorldModalOpen}
-        onClose={() => setIsWorldModalOpen(false)}
-        onSelectStation={(stationId) => {
-          if (stationId === 'instrumentation-workshop') {
-            const el = document.getElementById('instrumentation');
-            el?.scrollIntoView({ behavior: 'smooth' });
+      {/* Playable 3D Biomedical Exploration Campus Experience */}
+      <CampusWorldExperience
+        isOpen={isCampusWorldOpen}
+        onClose={() => setIsCampusWorldOpen(false)}
+        onNavigateToTarget={(targetType, targetId) => {
+          if (targetType === 'instrument' || targetId === 'instrumentation-workshop') {
+            document.getElementById('instrumentation')?.scrollIntoView({ behavior: 'smooth' });
+          } else if (targetType === 'contact') {
+            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+          } else if (targetType === 'archive') {
+            document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
           } else {
-            const el = document.getElementById('work');
-            el?.scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
           }
         }}
       />
