@@ -7,6 +7,7 @@ import { Projects } from './components/sections/Projects';
 import { Experience } from './components/sections/Experience';
 import { Skills } from './components/sections/Skills';
 import { Education } from './components/sections/Education';
+import { InstrumentationWorkshop } from './components/sections/InstrumentationWorkshop';
 import { Contact } from './components/sections/Contact';
 
 export const App: React.FC = () => {
@@ -62,9 +63,10 @@ export const App: React.FC = () => {
         <Hero />
       </div>
 
-      {/* Main Professional Sections */}
+      {/* Main Professional Sections (5 Connected Exploration Zones) */}
       <main id="main-content" tabIndex={-1} className="focus:outline-none">
         <Projects />
+        <InstrumentationWorkshop />
         <Experience />
         <Skills />
         <Education />

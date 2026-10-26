@@ -20,10 +20,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggle3D, is3DActive = true })
   }, []);
 
   const navLinks = [
-    { name: 'Work', href: '#work' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Capabilities', href: '#capabilities' },
-    { name: 'Academic Background', href: '#background' },
+    { name: '1. Atrium', href: '#' },
+    { name: '2. Neural Studio', href: '#work' },
+    { name: '3. Imaging Gallery', href: '#work' },
+    { name: '4. Instrumentation', href: '#instrumentation' },
+    { name: '5. Archive & Experience', href: '#experience' },
     { name: 'Contact', href: '#contact' },
   ];
 
