@@ -4,14 +4,14 @@ import * as THREE from 'three';
 
 export const SignalWaveformStream: React.FC = () => {
   const lineGeometryRef = useRef<THREE.BufferGeometry>(null!);
-  const count = 120;
+  const count = 100;
 
   const positions = useMemo(() => {
     const pos = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      const x = (i / (count - 1) - 0.5) * 9;
+      const x = (i / (count - 1) - 0.5) * 8.5;
       pos[i * 3] = x;
-      pos[i * 3 + 1] = -2.8;
+      pos[i * 3 + 1] = -2.7;
       pos[i * 3 + 2] = 0;
     }
     return pos;
@@ -25,10 +25,11 @@ export const SignalWaveformStream: React.FC = () => {
         const array = posAttr.array as Float32Array;
         for (let i = 0; i < count; i++) {
           const x = array[i * 3];
+          // Restrained physiological pulse trace
           const wave = 
-            Math.sin(x * 1.8 + time * 3.5) * 0.18 +
-            Math.cos(x * 3.2 - time * 2.0) * 0.12 +
-            Math.sin(x * 0.8 + time * 1.2) * 0.25;
+            Math.sin(x * 1.5 + time * 2.2) * 0.12 +
+            Math.cos(x * 2.8 - time * 1.4) * 0.08 +
+            Math.sin(x * 0.7 + time * 0.8) * 0.16;
 
           array[i * 3 + 1] = -2.5 + wave;
         }
@@ -45,7 +46,7 @@ export const SignalWaveformStream: React.FC = () => {
           args={[positions, 3]}
         />
       </bufferGeometry>
-      <lineBasicMaterial color="#0df2c9" transparent opacity={0.65} />
+      <lineBasicMaterial color="#315B4C" transparent opacity={0.45} />
     </lineSegments>
   );
 };

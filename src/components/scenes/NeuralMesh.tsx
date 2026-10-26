@@ -7,16 +7,17 @@ export const NeuralMesh: React.FC = () => {
   const linesRef = useRef<THREE.LineSegments>(null!);
   const coreRef = useRef<THREE.Group>(null!);
 
-  // Generate procedural neural node positions
+  // Generate procedural architectural neural nodes & geometric coordinates
   const { nodePositions, linePositions } = useMemo(() => {
-    const nodeCount = 55;
+    const nodeCount = 48;
     const positions: number[] = [];
     const coords: THREE.Vector3[] = [];
 
+    // Distribute nodes in a calm, balanced geometric cluster
     for (let i = 0; i < nodeCount; i++) {
-      const radius = 2.2 + Math.random() * 1.8;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 2 - 1);
+      const radius = 2.0 + (i % 3) * 0.55;
+      const theta = (i / nodeCount) * Math.PI * 4;
+      const phi = Math.acos(((i * 2) / nodeCount) - 1);
 
       const x = radius * Math.sin(phi) * Math.cos(theta);
       const y = radius * Math.sin(phi) * Math.sin(theta);
@@ -26,11 +27,12 @@ export const NeuralMesh: React.FC = () => {
       coords.push(new THREE.Vector3(x, y, z));
     }
 
+    // Connect close neighbors with precise geometric lines
     const lines: number[] = [];
     for (let i = 0; i < coords.length; i++) {
       for (let j = i + 1; j < coords.length; j++) {
         const dist = coords[i].distanceTo(coords[j]);
-        if (dist < 1.7) {
+        if (dist < 1.65) {
           lines.push(coords[i].x, coords[i].y, coords[i].z);
           lines.push(coords[j].x, coords[j].y, coords[j].z);
         }
@@ -46,14 +48,14 @@ export const NeuralMesh: React.FC = () => {
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
     if (coreRef.current) {
-      coreRef.current.rotation.y = time * 0.12;
-      coreRef.current.rotation.x = Math.sin(time * 0.08) * 0.15;
+      coreRef.current.rotation.y = time * 0.08;
+      coreRef.current.rotation.x = Math.sin(time * 0.05) * 0.09;
     }
   });
 
   return (
     <group ref={coreRef}>
-      {/* Neural Nodes / Bio-potential Electrodes */}
+      {/* Bio-potential Electrode Nodes - Tactile Bronze/Copper */}
       <points ref={pointsRef}>
         <bufferGeometry>
           <bufferAttribute
@@ -62,15 +64,15 @@ export const NeuralMesh: React.FC = () => {
           />
         </bufferGeometry>
         <pointsMaterial
-          size={0.12}
-          color="#0df2c9"
+          size={0.11}
+          color="#B66B49"
           transparent
-          opacity={0.85}
+          opacity={0.88}
           sizeAttenuation
         />
       </points>
 
-      {/* Synaptic Interconnections / Neural Tracts */}
+      {/* Structural Synaptic Geometry - Restrained Charcoal Ink Lines */}
       <lineSegments ref={linesRef}>
         <bufferGeometry>
           <bufferAttribute
@@ -79,23 +81,34 @@ export const NeuralMesh: React.FC = () => {
           />
         </bufferGeometry>
         <lineBasicMaterial
-          color="#38bdf8"
+          color="#171916"
           transparent
-          opacity={0.25}
+          opacity={0.32}
         />
       </lineSegments>
 
-      {/* Central Core Glow Sphere */}
-      <mesh>
-        <sphereGeometry args={[0.7, 32, 32]} />
+      {/* Inner Precision Calibration Gyro Ring */}
+      <mesh rotation={[Math.PI / 4, 0, 0]}>
+        <torusGeometry args={[1.4, 0.012, 16, 72]} />
         <meshStandardMaterial
-          color="#0df2c9"
-          emissive="#0a5247"
-          roughness={0.2}
-          metalness={0.8}
+          color="#315B4C"
+          roughness={0.4}
+          metalness={0.6}
+          transparent
+          opacity={0.65}
+        />
+      </mesh>
+
+      {/* Central Tactile Spherical Core */}
+      <mesh>
+        <sphereGeometry args={[0.55, 32, 32]} />
+        <meshStandardMaterial
+          color="#ECE8E0"
+          roughness={0.3}
+          metalness={0.2}
           wireframe
           transparent
-          opacity={0.4}
+          opacity={0.45}
         />
       </mesh>
     </group>

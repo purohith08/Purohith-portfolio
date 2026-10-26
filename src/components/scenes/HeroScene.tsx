@@ -15,17 +15,16 @@ const InteractiveRig: React.FC<{ reducedMotion?: boolean }> = ({ reducedMotion }
 
   useFrame((state) => {
     if (reducedMotion) return;
-    // Gentle mouse parallax interpolation
     const { pointer } = state;
-    const targetX = pointer.x * 0.45;
-    const targetY = pointer.y * 0.35;
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetX, 0.05);
-    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, -targetY, 0.05);
+    const targetX = pointer.x * 0.35;
+    const targetY = pointer.y * 0.25;
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetX, 0.04);
+    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, -targetY, 0.04);
   });
 
   return (
     <group ref={groupRef}>
-      <Float speed={reducedMotion ? 0 : 1.2} rotationIntensity={0.2} floatIntensity={0.4}>
+      <Float speed={reducedMotion ? 0 : 0.8} rotationIntensity={0.15} floatIntensity={0.25}>
         <NeuralMesh />
         <MedicalScanRings />
       </Float>
@@ -38,14 +37,15 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ reducedMotion = false }) =
   return (
     <div className="w-full h-full absolute inset-0 pointer-events-auto" aria-hidden="true">
       <Canvas
-        camera={{ position: [0, 0, 7.5], fov: 45 }}
-        dpr={[1, 1.75]} // Cap DPR to 1.75 for reliable high-efficiency 60fps rendering
+        camera={{ position: [0, 0, 7.8], fov: 42 }}
+        dpr={[1, 1.75]}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       >
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[10, 10, 5]} intensity={1.2} color="#ffffff" />
-        <pointLight position={[-10, -10, -5]} intensity={1.5} color="#0df2c9" />
-        <pointLight position={[5, -5, 5]} intensity={1.0} color="#38bdf8" />
+        {/* Soft, architectural warm museum lighting */}
+        <ambientLight intensity={0.85} color="#F5F3EE" />
+        <directionalLight position={[8, 12, 6]} intensity={1.1} color="#FFFBF0" />
+        <pointLight position={[-8, -6, -4]} intensity={0.6} color="#315B4C" />
+        <pointLight position={[6, -4, 4]} intensity={0.5} color="#B66B49" />
 
         <Suspense fallback={null}>
           <InteractiveRig reducedMotion={reducedMotion} />
@@ -54,11 +54,11 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ reducedMotion = false }) =
         <OrbitControls
           enableZoom={false}
           enablePan={false}
-          maxPolarAngle={Math.PI / 1.6}
-          minPolarAngle={Math.PI / 2.4}
-          rotateSpeed={0.5}
+          maxPolarAngle={Math.PI / 1.7}
+          minPolarAngle={Math.PI / 2.3}
+          rotateSpeed={0.4}
           autoRotate={!reducedMotion}
-          autoRotateSpeed={0.3}
+          autoRotateSpeed={0.2}
         />
       </Canvas>
     </div>

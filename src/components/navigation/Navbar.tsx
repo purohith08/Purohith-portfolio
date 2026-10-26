@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Layers, 
-  Briefcase, 
-  Cpu, 
-  GraduationCap, 
-  Mail, 
-  Menu, 
-  X, 
-  Eye, 
-  EyeOff 
-} from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '../ui/Icons';
 
 interface NavbarProps {
@@ -23,105 +13,105 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggle3D, is3DActive = true })
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Featured Work', href: '#projects', icon: Layers },
-    { name: 'Experience', href: '#experience', icon: Briefcase },
-    { name: 'Capabilities', href: '#skills', icon: Cpu },
-    { name: 'Education', href: '#education', icon: GraduationCap },
-    { name: 'Contact', href: '#contact', icon: Mail },
+    { name: 'Work', href: '#work' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Capabilities', href: '#capabilities' },
+    { name: 'Academic Background', href: '#background' },
+    { name: 'Contact', href: '#contact' },
   ];
 
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled 
-          ? 'bg-[#07090e]/85 backdrop-blur-md border-b border-cyan-500/15 py-3 shadow-lg shadow-black/40' 
+          ? 'bg-[#F5F3EE]/92 backdrop-blur-md border-b border-[#D9D5CC] py-3.5 shadow-sm' 
           : 'bg-transparent py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="flex items-center justify-between">
           
-          {/* Logo / Monogram */}
+          {/* Refined Identity Monogram */}
           <a 
             href="#" 
-            className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-teal-400 rounded-lg p-1"
-            aria-label="S. Purohith Portfolio Home"
+            className="flex items-center gap-3.5 group focus:outline-none focus:ring-2 focus:ring-[#315B4C] rounded-md"
+            aria-label="S. Purohith Portfolio Homepage"
           >
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-teal-500/20 to-cyan-500/10 border border-teal-500/40 flex items-center justify-center text-teal-300 font-mono font-bold text-lg group-hover:border-teal-400 transition-colors shadow-sm shadow-teal-500/20">
+            <div className="w-8 h-8 rounded bg-[#171916] text-[#F5F3EE] flex items-center justify-center font-mono font-semibold text-xs tracking-wider transition-colors group-hover:bg-[#315B4C]">
               SP
             </div>
             <div className="flex flex-col">
-              <span className="font-semibold text-slate-100 text-sm tracking-wide group-hover:text-teal-300 transition-colors">
-                S. PUROHITH
+              <span className="font-semibold text-[#171916] text-sm tracking-tight leading-snug">
+                S. Purohith
               </span>
-              <span className="text-[11px] font-mono text-cyan-400/80 tracking-wider">
-                BIOMEDICAL SYSTEMS & SOFTWARE
+              <span className="text-[11px] font-mono text-[#595D56] tracking-normal">
+                Biomedical & Medical Software
               </span>
             </div>
           </a>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1 bg-slate-900/60 p-1.5 rounded-full border border-slate-800/80 shadow-inner" aria-label="Main Navigation">
+          {/* Desktop Minimal Navigation */}
+          <nav className="hidden md:flex items-center gap-8" aria-label="Main Navigation">
             {navLinks.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="px-4 py-1.5 text-xs font-medium text-slate-300 hover:text-teal-300 hover:bg-slate-800/70 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-teal-400"
+                className="text-xs font-medium tracking-wide text-[#595D56] hover:text-[#171916] transition-colors relative py-1 focus:outline-none focus:text-[#171916]"
               >
                 {item.name}
               </a>
             ))}
           </nav>
 
-          {/* Quick Shortcuts & 3D Performance Toggle */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* Actions & Scene Switcher */}
+          <div className="hidden md:flex items-center gap-4">
             {onToggle3D && (
               <button
                 onClick={onToggle3D}
                 type="button"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono bg-slate-900/80 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/10 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-400 cursor-pointer"
-                title={is3DActive ? "Switch to lightweight fallback scene" : "Enable interactive 3D WebGL scene"}
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-mono border border-[#D9D5CC] bg-[#ECE8E0]/60 text-[#595D56] hover:text-[#171916] hover:border-[#171916]/30 transition-all cursor-pointer"
+                title={is3DActive ? "Switch to minimal diagram mode" : "Enable interactive 3D spatial scene"}
               >
-                {is3DActive ? <Eye className="w-3.5 h-3.5 text-teal-400" /> : <EyeOff className="w-3.5 h-3.5 text-amber-400" />}
-                <span>{is3DActive ? "3D Active" : "Lite Mode"}</span>
+                <span className={`w-1.5 h-1.5 rounded-full ${is3DActive ? 'bg-[#315B4C]' : 'bg-[#B66B49]'}`} />
+                <span>{is3DActive ? "3D Scene" : "Lite Mode"}</span>
               </button>
             )}
 
-            <div className="h-5 w-px bg-slate-800" />
+            <div className="h-4 w-px bg-[#D9D5CC]" />
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               <a
                 href="https://github.com/purohith08"
                 target="_blank"
                 rel="noreferrer"
-                className="p-2 text-slate-400 hover:text-teal-300 hover:bg-slate-800/60 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-teal-400"
+                className="p-1.5 text-[#595D56] hover:text-[#171916] transition-colors rounded"
                 aria-label="GitHub Profile"
               >
-                <GithubIcon className="w-4 h-4" />
+                <GithubIcon className="w-3.5 h-3.5" />
               </a>
               <a
                 href="https://www.linkedin.com/in/purohiths/"
                 target="_blank"
                 rel="noreferrer"
-                className="p-2 text-slate-400 hover:text-teal-300 hover:bg-slate-800/60 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-teal-400"
+                className="p-1.5 text-[#595D56] hover:text-[#171916] transition-colors rounded"
                 aria-label="LinkedIn Profile"
               >
-                <LinkedinIcon className="w-4 h-4" />
+                <LinkedinIcon className="w-3.5 h-3.5" />
               </a>
             </div>
 
             <a
               href="#contact"
-              className="px-4 py-1.5 text-xs font-semibold rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 text-slate-950 hover:brightness-110 shadow-md shadow-teal-500/20 transition-all font-mono"
+              className="inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-semibold rounded bg-[#171916] text-[#F5F3EE] hover:bg-[#315B4C] transition-colors shadow-xs"
             >
-              CONNECT
+              <span>Get in touch</span>
             </a>
           </div>
 
@@ -130,15 +120,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggle3D, is3DActive = true })
             {onToggle3D && (
               <button
                 onClick={onToggle3D}
-                className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-cyan-400 text-xs font-mono"
-                aria-label="Toggle 3D"
+                className="px-2 py-1 rounded border border-[#D9D5CC] text-[10px] font-mono text-[#595D56]"
               >
                 {is3DActive ? "3D" : "2D"}
               </button>
             )}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+              className="p-2 rounded text-[#171916] hover:text-[#315B4C] focus:outline-none"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -149,46 +138,42 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggle3D, is3DActive = true })
 
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-3 pt-3 pb-4 border-t border-slate-800/80 bg-slate-950/95 backdrop-blur-xl rounded-2xl px-4 shadow-2xl flex flex-col gap-2">
-            {navLinks.map((item) => {
-              const Icon = item.icon;
-              return (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 py-2.5 px-3 text-sm text-slate-300 hover:text-teal-300 hover:bg-slate-900/80 rounded-xl transition-colors"
-                >
-                  <Icon className="w-4 h-4 text-teal-400" />
-                  <span>{item.name}</span>
-                </a>
-              );
-            })}
-            <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between">
+          <div className="md:hidden mt-3 pt-3 pb-4 border-t border-[#D9D5CC] bg-[#F5F3EE] flex flex-col gap-3">
+            {navLinks.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-sm font-medium text-[#171916] py-1 px-1 hover:text-[#315B4C] transition-colors"
+              >
+                {item.name}
+              </a>
+            ))}
+            <div className="pt-3 border-t border-[#D9D5CC] flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <a
                   href="https://github.com/purohith08"
                   target="_blank"
                   rel="noreferrer"
-                  className="p-2 text-slate-400 hover:text-teal-300"
+                  className="text-[#595D56] hover:text-[#171916]"
                 >
-                  <GithubIcon className="w-5 h-5" />
+                  <GithubIcon className="w-4 h-4" />
                 </a>
                 <a
                   href="https://www.linkedin.com/in/purohiths/"
                   target="_blank"
                   rel="noreferrer"
-                  className="p-2 text-slate-400 hover:text-teal-300"
+                  className="text-[#595D56] hover:text-[#171916]"
                 >
-                  <LinkedinIcon className="w-5 h-5" />
+                  <LinkedinIcon className="w-4 h-4" />
                 </a>
               </div>
               <a
                 href="#contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-4 py-2 text-xs font-semibold rounded-full bg-teal-500 text-slate-950 font-mono"
+                className="px-3.5 py-1.5 text-xs font-semibold rounded bg-[#171916] text-[#F5F3EE]"
               >
-                CONNECT & RESUME
+                Contact
               </a>
             </div>
           </div>

@@ -40,25 +40,29 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col telemetry-grid relative selection:bg-teal-500/20 selection:text-teal-200">
+    <div className="min-h-screen bg-[#F5F3EE] text-[#171916] flex flex-col relative selection:bg-[#315B4C]/15 selection:text-[#171916]">
       
-      {/* Fixed Navigation */}
+      {/* Editorial Fixed Header */}
       <Navbar onToggle3D={webGLSupported ? toggle3D : undefined} is3DActive={is3DActive} />
 
-      {/* Hero Visual Container */}
-      <div className="relative w-full overflow-hidden">
-        {/* 3D Scene or Accessible 2D Fallback */}
-        {is3DActive && webGLSupported ? (
-          <HeroScene reducedMotion={reducedMotion} />
-        ) : (
-          <SceneFallback />
-        )}
+      {/* Hero Visual Composition */}
+      <div className="relative w-full">
+        {/* Integrated 3D Scene / Fallback positioned in right viewport */}
+        <div className="hidden lg:block absolute right-0 top-0 w-1/2 h-[92vh] pointer-events-none z-0">
+          <div className="relative w-full h-full pointer-events-auto">
+            {is3DActive && webGLSupported ? (
+              <HeroScene reducedMotion={reducedMotion} />
+            ) : (
+              <SceneFallback />
+            )}
+          </div>
+        </div>
 
         {/* Hero Interactive Overlay */}
         <Hero />
       </div>
 
-      {/* Main Content Sections */}
+      {/* Main Professional Sections */}
       <main id="main-content" tabIndex={-1} className="focus:outline-none">
         <Projects />
         <Experience />
@@ -66,7 +70,7 @@ export const App: React.FC = () => {
         <Education />
       </main>
 
-      {/* Recruiter Contact & Footer */}
+      {/* Editorial Contact & Colophon */}
       <Contact />
 
     </div>
