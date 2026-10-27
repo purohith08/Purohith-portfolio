@@ -1,196 +1,135 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from '../ui/Icons';
+import React, { useState } from 'react';
+import { Activity, Radio, Cpu, Layers, User, Mail, Menu, X } from 'lucide-react';
+import { profileData } from '../../data/profile';
 
 interface NavbarProps {
-  onToggle3D?: () => void;
   is3DActive?: boolean;
-  onOpenWorld?: () => void;
+  onToggle3D?: () => void;
+  scrollProgress?: number;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onToggle3D, is3DActive = true, onOpenWorld }) => {
-  const [scrolled, setScrolled] = useState(false);
+export const Navbar: React.FC<NavbarProps> = ({ is3DActive = true, onToggle3D }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const navLinks = [
-    { name: '1. Atrium', href: '#' },
-    { name: '2. Neural Studio', href: '#work' },
-    { name: '3. Imaging Gallery', href: '#work' },
-    { name: '4. Instrumentation', href: '#instrumentation' },
-    { name: '5. Archive & Experience', href: '#experience' },
-    { name: 'Contact', href: '#contact' },
+    { label: 'Imaging Software', href: '#imaging', icon: Layers },
+    { label: 'Biosignals', href: '#signals', icon: Activity },
+    { label: 'Hardware & DSP', href: '#hardware', icon: Cpu },
+    { label: 'Projects', href: '#projects', icon: Radio },
+    { label: 'Experience', href: '#experience', icon: User },
+    { label: 'Contact', href: '#contact', icon: Mail },
   ];
 
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-[#F5F3EE]/92 backdrop-blur-md border-b border-[#D9D5CC] py-3.5 shadow-sm' 
-          : 'bg-transparent py-5'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        <div className="flex items-center justify-between">
-          
-          {/* Refined Identity Monogram */}
-          <a 
-            href="#" 
-            className="flex items-center gap-3.5 group focus:outline-none focus:ring-2 focus:ring-[#315B4C] rounded-md"
-            aria-label="S. Purohith Portfolio Homepage"
+    <header className="fixed top-0 left-0 right-0 z-50 surface-instrument border-b border-white/10 px-4 sm:px-8 py-3 transition-all duration-300">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        
+        {/* Lab Branding & Status Indicator */}
+        <a href="#" className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-[#00F2FE]/50 rounded p-1">
+          <div className="w-8 h-8 rounded bg-[#0A1120] border border-[#00F2FE]/30 flex items-center justify-center relative overflow-hidden group-hover:border-[#00F2FE] transition-colors">
+            <span className="w-2 h-2 rounded-full bg-[#00F2FE] animate-signal-pulse" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#00F2FE]/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+          </div>
+          <div className="flex flex-col text-left">
+            <div className="flex items-center gap-2">
+              <span className="font-display font-semibold text-sm tracking-wider text-white">
+                {profileData.name.toUpperCase()}
+              </span>
+              <span className="badge-telemetry text-[9px] py-0.5 px-1.5 hidden sm:inline-block">
+                LAB: BIOMEDICAL
+              </span>
+            </div>
+            <span className="font-telemetry text-[10px] text-[#94A3B8] tracking-tight">
+              MED-TECH / C++ / BIOSIGNALS
+            </span>
+          </div>
+        </a>
+
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-1 bg-[#060911]/60 border border-white/5 rounded-full p-1.5 shadow-inner">
+          {navLinks.map((link) => {
+            const Icon = link.icon;
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#94A3B8] hover:text-[#00F2FE] hover:bg-white/5 transition-all focus:outline-none focus:ring-1 focus:ring-[#00F2FE]"
+              >
+                <Icon className="w-3.5 h-3.5 opacity-70" />
+                <span>{link.label}</span>
+              </a>
+            );
+          })}
+        </nav>
+
+        {/* Right HUD Controls */}
+        <div className="flex items-center gap-3">
+          {/* 3D Visualizer Toggle if supported */}
+          {onToggle3D && (
+            <button
+              onClick={onToggle3D}
+              aria-label="Toggle 3D Visualizer Engine"
+              title="Toggle WebGL Background Engine"
+              className={`hidden sm:flex items-center gap-2 px-3 py-1.5 rounded text-xs font-telemetry border transition-all ${
+                is3DActive
+                  ? 'border-[#00F2FE]/40 bg-[#00F2FE]/10 text-[#00F2FE]'
+                  : 'border-white/10 bg-white/5 text-[#94A3B8] hover:text-white'
+              }`}
+            >
+              <Radio className={`w-3.5 h-3.5 ${is3DActive ? 'animate-pulse text-[#00F2FE]' : ''}`} />
+              <span>3D ENGINE: {is3DActive ? 'ONLINE' : 'BYPASS'}</span>
+            </button>
+          )}
+
+          {/* Quick Contact CTA */}
+          <a
+            href={`mailto:${profileData.contact.email}`}
+            className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded bg-[#00F2FE] text-[#060911] hover:bg-[#0AE4BA] font-display font-medium text-xs tracking-wide transition-colors shadow-sm"
           >
-            <div className="w-8 h-8 rounded bg-[#171916] text-[#F5F3EE] flex items-center justify-center font-mono font-semibold text-xs tracking-wider transition-colors group-hover:bg-[#315B4C]">
-              SP
-            </div>
-            <div className="flex flex-col">
-              <span className="font-semibold text-[#171916] text-sm tracking-tight leading-snug">
-                S. Purohith
-              </span>
-              <span className="text-[11px] font-mono text-[#595D56] tracking-normal">
-                Biomedical & Medical Software
-              </span>
-            </div>
+            <span>Dispatch Contact</span>
           </a>
 
-          {/* Desktop Minimal Navigation */}
-          <nav className="hidden md:flex items-center gap-8" aria-label="Main Navigation">
-            {navLinks.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-xs font-medium tracking-wide text-[#595D56] hover:text-[#171916] transition-colors relative py-1 focus:outline-none focus:text-[#171916]"
-              >
-                {item.name}
-              </a>
-            ))}
-          </nav>
-
-          {/* Actions & Scene Switcher */}
-          <div className="hidden md:flex items-center gap-4">
-            {onOpenWorld && (
-              <button
-                onClick={onOpenWorld}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono bg-[#315B4C] text-[#F5F3EE] hover:bg-[#234337] transition-colors cursor-pointer shadow-xs"
-              >
-                <span>Explore 3D World</span>
-              </button>
-            )}
-
-            {onToggle3D && (
-              <button
-                onClick={onToggle3D}
-                type="button"
-                className="flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-mono border border-[#D9D5CC] bg-[#ECE8E0]/60 text-[#595D56] hover:text-[#171916] hover:border-[#171916]/30 transition-all cursor-pointer"
-                title={is3DActive ? "Switch to minimal diagram mode" : "Enable interactive 3D spatial scene"}
-              >
-                <span className={`w-1.5 h-1.5 rounded-full ${is3DActive ? 'bg-[#315B4C]' : 'bg-[#B66B49]'}`} />
-                <span>{is3DActive ? "3D Scene" : "Lite Mode"}</span>
-              </button>
-            )}
-
-            <div className="h-4 w-px bg-[#D9D5CC]" />
-
-            <div className="flex items-center gap-1">
-              <a
-                href="https://github.com/purohith08"
-                target="_blank"
-                rel="noreferrer"
-                className="p-1.5 text-[#595D56] hover:text-[#171916] transition-colors rounded"
-                aria-label="GitHub Profile"
-              >
-                <GithubIcon className="w-3.5 h-3.5" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/purohiths/"
-                target="_blank"
-                rel="noreferrer"
-                className="p-1.5 text-[#595D56] hover:text-[#171916] transition-colors rounded"
-                aria-label="LinkedIn Profile"
-              >
-                <LinkedinIcon className="w-3.5 h-3.5" />
-              </a>
-            </div>
-
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-semibold rounded bg-[#171916] text-[#F5F3EE] hover:bg-[#315B4C] transition-colors shadow-xs"
-            >
-              <span>Get in touch</span>
-            </a>
-          </div>
-
-          {/* Mobile menu trigger */}
-          <div className="flex items-center gap-2 md:hidden">
-            {onToggle3D && (
-              <button
-                onClick={onToggle3D}
-                className="px-2 py-1 rounded border border-[#D9D5CC] text-[10px] font-mono text-[#595D56]"
-              >
-                {is3DActive ? "3D" : "2D"}
-              </button>
-            )}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded text-[#171916] hover:text-[#315B4C] focus:outline-none"
-              aria-label="Toggle navigation menu"
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
-
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 rounded text-[#94A3B8] hover:text-white hover:bg-white/5 focus:outline-none"
+            aria-label="Toggle Menu"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
         </div>
-
-        {/* Mobile Dropdown Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden mt-3 pt-3 pb-4 border-t border-[#D9D5CC] bg-[#F5F3EE] flex flex-col gap-3">
-            {navLinks.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-[#171916] py-1 px-1 hover:text-[#315B4C] transition-colors"
-              >
-                {item.name}
-              </a>
-            ))}
-            <div className="pt-3 border-t border-[#D9D5CC] flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <a
-                  href="https://github.com/purohith08"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[#595D56] hover:text-[#171916]"
-                >
-                  <GithubIcon className="w-4 h-4" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/purohiths/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[#595D56] hover:text-[#171916]"
-                >
-                  <LinkedinIcon className="w-4 h-4" />
-                </a>
-              </div>
-              <a
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3.5 py-1.5 text-xs font-semibold rounded bg-[#171916] text-[#F5F3EE]"
-              >
-                Contact
-              </a>
-            </div>
-          </div>
-        )}
-
       </div>
+
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden surface-instrument border-t border-white/10 mt-3 p-4 rounded-xl flex flex-col gap-2">
+          {navLinks.map((link) => {
+            const Icon = link.icon;
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-3 px-3 py-2.5 rounded text-sm text-[#94A3B8] hover:text-[#00F2FE] hover:bg-white/5"
+              >
+                <Icon className="w-4 h-4 text-[#00F2FE]" />
+                <span>{link.label}</span>
+              </a>
+            );
+          })}
+          {onToggle3D && (
+            <div className="pt-2 border-t border-white/10 flex items-center justify-between">
+              <span className="font-telemetry text-xs text-[#94A3B8]">3D Telemetry Render:</span>
+              <button
+                onClick={onToggle3D}
+                className="badge-telemetry text-xs"
+              >
+                {is3DActive ? 'ACTIVE' : 'DISABLED'}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </header>
   );
 };

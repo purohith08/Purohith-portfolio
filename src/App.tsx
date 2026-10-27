@@ -1,42 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Navbar } from './components/navigation/Navbar';
 import { Hero } from './components/sections/Hero';
-import { HeroScene } from './components/scenes/HeroScene';
-import { SceneFallback } from './components/scenes/SceneFallback';
+import { DICOMViewport } from './components/sections/DICOMViewport';
+import { EEGWorkbench } from './components/sections/EEGWorkbench';
+import { InstrumentationWorkshop } from './components/sections/InstrumentationWorkshop';
 import { Projects } from './components/sections/Projects';
 import { Experience } from './components/sections/Experience';
 import { Skills } from './components/sections/Skills';
 import { Education } from './components/sections/Education';
-import { InstrumentationWorkshop } from './components/sections/InstrumentationWorkshop';
 import { Contact } from './components/sections/Contact';
+import { SceneFallback } from './components/scenes/SceneFallback';
+import { scrollSceneController } from './components/scenes/ScrollSceneController';
 
-import { CampusWorldExperience } from './components/scenes/CampusWorldExperience';
+// Dynamically load the 3D instrument stage to keep initial chunk light and optimize load
+const InstrumentStage = lazy(() => import('./components/scenes/InstrumentStage'));
 
 export const App: React.FC = () => {
-  const [is3DActive, setIs3DActive] = useState(true);
-  const [reducedMotion, setReducedMotion] = useState(false);
-  const [webGLSupported, setWebGLSupported] = useState(true);
-  const [isCampusWorldOpen, setIsCampusWorldOpen] = useState(false);
-
-  // Check WebGL availability and system reduced-motion preference
-  useEffect(() => {
+  const [is3DActive, setIs3DActive] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
     try {
       const canvas = document.createElement('canvas');
       const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      if (!gl) {
-        setWebGLSupported(false);
-        setIs3DActive(false);
-      }
-    } catch (e) {
-      setWebGLSupported(false);
-      setIs3DActive(false);
+      return !!gl;
+    } catch {
+      return false;
+    }
+  });
+
+  const [reducedMotion] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  });
+
+  const webGLSupported = is3DActive;
+
+  // Initialize and clean up GSAP ScrollTrigger
+  useEffect(() => {
+    if (!reducedMotion) {
+      scrollSceneController.initScrollTriggers();
     }
 
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (motionQuery.matches) {
-      setReducedMotion(true);
-    }
-  }, []);
+    const handleResize = () => {
+      scrollSceneController.refresh();
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      scrollSceneController.dispose();
+    };
+  }, [reducedMotion]);
 
   const toggle3D = () => {
     if (!webGLSupported) return;
@@ -44,60 +58,44 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F3EE] text-[#171916] flex flex-col relative selection:bg-[#315B4C]/15 selection:text-[#171916]">
+    <div className="min-h-screen bg-[#060911] text-[#F1F5F9] flex flex-col relative selection:bg-[#00F2FE]/20 selection:text-[#00F2FE] overflow-x-hidden">
       
-      {/* Editorial Fixed Header */}
+      {/* Background Precision Grid & Radial Gradient */}
+      <div className="fixed inset-0 bg-lab-grid pointer-events-none opacity-50 z-0" />
+      <div className="fixed inset-0 bg-lab-radial pointer-events-none z-0" />
+
+      {/* Persistent Full-Page Procedural 3D Scientific Instrument Stage */}
+      {is3DActive && webGLSupported ? (
+        <Suspense fallback={<SceneFallback />}>
+          <InstrumentStage reducedMotion={reducedMotion} />
+        </Suspense>
+      ) : (
+        <SceneFallback />
+      )}
+
+      {/* Fixed Telemetry HUD Header */}
       <Navbar 
         onToggle3D={webGLSupported ? toggle3D : undefined} 
         is3DActive={is3DActive} 
-        onOpenWorld={() => setIsCampusWorldOpen(true)}
       />
 
-      {/* Hero Visual Composition */}
-      <div className="relative w-full">
-        {/* Integrated 3D Scene / Fallback positioned in right viewport */}
-        <div className="hidden lg:block absolute right-0 top-0 w-1/2 h-[92vh] pointer-events-none z-0">
-          <div className="relative w-full h-full pointer-events-auto">
-            {is3DActive && webGLSupported ? (
-              <HeroScene reducedMotion={reducedMotion} />
-            ) : (
-              <SceneFallback />
-            )}
-          </div>
-        </div>
+      {/* Main Professional Content Layers (Semantic Accessible HTML) */}
+      <div className="relative z-10">
+        <Hero />
+        
+        <main id="main-content" tabIndex={-1} className="focus:outline-none">
+          <DICOMViewport />
+          <EEGWorkbench />
+          <InstrumentationWorkshop />
+          <Projects />
+          <Experience />
+          <Skills />
+          <Education />
+        </main>
 
-        {/* Hero Interactive Overlay */}
-        <Hero onExploreClick={() => setIsCampusWorldOpen(true)} />
+        {/* Laboratory Dispatch Contact & Colophon */}
+        <Contact />
       </div>
-
-      {/* Main Professional Sections (5 Connected Exploration Zones) */}
-      <main id="main-content" tabIndex={-1} className="focus:outline-none">
-        <Projects />
-        <InstrumentationWorkshop />
-        <Experience />
-        <Skills />
-        <Education />
-      </main>
-
-      {/* Editorial Contact & Colophon */}
-      <Contact />
-
-      {/* Playable 3D Biomedical Exploration Campus Experience */}
-      <CampusWorldExperience
-        isOpen={isCampusWorldOpen}
-        onClose={() => setIsCampusWorldOpen(false)}
-        onNavigateToTarget={(targetType, targetId) => {
-          if (targetType === 'instrument' || targetId === 'instrumentation-workshop') {
-            document.getElementById('instrumentation')?.scrollIntoView({ behavior: 'smooth' });
-          } else if (targetType === 'contact') {
-            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-          } else if (targetType === 'archive') {
-            document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
-          } else {
-            document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
-          }
-        }}
-      />
 
     </div>
   );

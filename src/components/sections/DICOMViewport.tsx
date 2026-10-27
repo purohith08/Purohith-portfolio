@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, ChevronLeft, ChevronRight, Info } from 'lucide-react';
+import { Play, Pause, ChevronLeft, ChevronRight, Monitor } from 'lucide-react';
 
 export const DICOMViewport: React.FC = () => {
   const [currentFrame, setCurrentFrame] = useState<number>(14);
@@ -14,25 +14,25 @@ export const DICOMViewport: React.FC = () => {
       level: 'L: 40', 
       label: 'Soft Tissue', 
       cssFilter: 'contrast(1.2) brightness(1.0)',
-      paletteColor: '#315B4C'
+      colorAccent: '#00F2FE'
     },
     bone: { 
       window: 'W: 1800', 
       level: 'L: 400', 
       label: 'Bone Window', 
       cssFilter: 'contrast(2.2) brightness(1.3) grayscale(1)',
-      paletteColor: '#D9D5CC'
+      colorAccent: '#0AE4BA'
     },
     lung: { 
       window: 'W: 1500', 
       level: 'L: -600', 
       label: 'Lung Window', 
       cssFilter: 'contrast(0.85) brightness(0.75)',
-      paletteColor: '#8A8E85'
+      colorAccent: '#38BDF8'
     },
   };
 
-  // Real automated Cine Playback loop (advancing slices at clinical cine framerate)
+  // Automated Cine Playback loop (advancing slices at clinical cine framerate)
   useEffect(() => {
     if (isPlaying) {
       timerRef.current = window.setInterval(() => {
@@ -51,113 +51,94 @@ export const DICOMViewport: React.FC = () => {
   }, [isPlaying]);
 
   return (
-    <div className="surface-card rounded-xl p-6 border border-[#D9D5CC] shadow-xs text-left">
+    <section id="imaging" className="py-20 px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto border-t border-white/10">
       
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#D9D5CC]">
+      {/* Section Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 text-left">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#B66B49] animate-pulse" />
-            <span className="text-[10px] font-mono text-[#8A8E85] uppercase tracking-wider">
-              ZONE 3 // MEDICAL IMAGING GALLERY
-            </span>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-2 h-2 rounded-full bg-[#00F2FE] animate-pulse" />
+            <span className="badge-telemetry">WORKFLOW 01: MEDICAL IMAGING</span>
           </div>
-          <h4 className="font-editorial text-xl font-normal text-[#171916] mt-0.5">
-            Qt/C++ DICOM & Cine Playback Viewport Architecture
-          </h4>
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            DICOM Viewport & Multi-Frame Cine Loop
+          </h2>
         </div>
-
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-mono px-2.5 py-1 rounded bg-[#ECE8E0] text-[#595D56] border border-[#D9D5CC]">
-            DE-IDENTIFIED BENCHMARK DATASET
-          </span>
-        </div>
+        <p className="text-sm text-[#94A3B8] max-w-md mt-4 md:mt-0 font-sans">
+          Simulating high-performance C++ Qt desktop viewport architectures: asynchronous multi-frame buffer loading, instantaneous window/level adjustments, and deterministic playback loops.
+        </p>
       </div>
 
-      {/* Main Workstation Screen */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 my-4">
-        
-        {/* Left: Medical Viewport */}
-        <div className="lg:col-span-8 bg-[#0A0D0B] rounded-lg border border-[#232B25] p-4 flex flex-col justify-between relative overflow-hidden h-72">
+      {/* Main Viewport Workspace */}
+      <div className="surface-instrument rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          {/* Top Medical Annotations */}
-          <div className="flex items-center justify-between text-[11px] font-mono text-[#8A8E85] z-10">
-            <div>
-              <span className="text-[#ECE8E0]/70 font-semibold">SYNTHETIC DICOM SEQUENCE</span>
-              <div className="text-[#315B4C] font-semibold mt-0.5">
-                AXIAL SLICE #{currentFrame} OF {totalFrames}
+          {/* Simulated DICOM Canvas Viewer */}
+          <div className="lg:col-span-7 bg-[#03060B] rounded-xl border border-white/10 p-4 relative overflow-hidden flex flex-col items-center justify-center min-h-[360px]">
+            {/* Viewport HUD Overlay: Standard Clinical Corner Annotations */}
+            <div className="absolute top-3 left-4 font-telemetry text-[11px] text-[#00F2FE] space-y-0.5 pointer-events-none z-10">
+              <div>SERIES: 004 / AXIAL CINE</div>
+              <div>MODALITY: CT (ILLUSTRATIVE)</div>
+              <div>ZOOM: 100% | 512x512</div>
+            </div>
+
+            <div className="absolute top-3 right-4 font-telemetry text-[11px] text-[#0AE4BA] text-right space-y-0.5 pointer-events-none z-10">
+              <div>{presets[activePreset].window}</div>
+              <div>{presets[activePreset].level}</div>
+              <div>FRAME: {String(currentFrame).padStart(2, '0')} / {totalFrames}</div>
+            </div>
+
+            <div className="absolute bottom-3 left-4 font-telemetry text-[10px] text-[#64748B] pointer-events-none z-10">
+              FPS: {isPlaying ? '10.0 (CINE)' : '0.0 (PAUSED)'} | QT GLWIDGET PIPELINE
+            </div>
+
+            {/* Procedural Cross-Sectional CT Anatomy Graphic */}
+            <div 
+              className="relative w-64 h-64 rounded-full flex items-center justify-center transition-all duration-200"
+              style={{ filter: presets[activePreset].cssFilter }}
+            >
+              {/* Patient Body Outer Contour */}
+              <div 
+                className="w-56 h-56 rounded-full border border-white/20 bg-gradient-to-b from-[#131B2A] to-[#0A101C] flex items-center justify-center relative shadow-inner"
+              >
+                {/* Vertebral Column / Spine posterior marker */}
+                <div 
+                  className="w-10 h-8 rounded-md bg-white/70 absolute bottom-6 border border-white shadow-md flex items-center justify-center"
+                  style={{ transform: `scale(${1 + Math.sin(currentFrame * 0.2) * 0.05})` }}
+                >
+                  <span className="w-3 h-3 rounded-full bg-[#03060B]" />
+                </div>
+
+                {/* Symmetrical Lung / Soft Tissue Cavities */}
+                <div className="flex gap-8 items-center justify-center">
+                  <div 
+                    className="w-14 h-24 rounded-3xl bg-[#03060B] border border-white/30"
+                    style={{ height: `${70 + Math.sin(currentFrame * 0.3) * 20}px` }}
+                  />
+                  <div 
+                    className="w-14 h-24 rounded-3xl bg-[#03060B] border border-white/30"
+                    style={{ height: `${70 + Math.sin(currentFrame * 0.3) * 20}px` }}
+                  />
+                </div>
+
+                {/* Mediastinum & Cardiac silhouette */}
+                <div 
+                  className="w-16 h-16 rounded-full bg-white/40 absolute border border-white/50 flex items-center justify-center"
+                  style={{ transform: `scale(${0.9 + Math.sin(currentFrame * 0.4) * 0.15})` }}
+                >
+                  <div className="w-8 h-8 rounded-full bg-white/60 animate-ping opacity-30" />
+                </div>
+
+                {/* Crosshair coordinate markers */}
+                <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30">
+                  <div className="w-full h-px bg-[#00F2FE]" />
+                  <div className="h-full w-px bg-[#00F2FE] absolute" />
+                </div>
               </div>
             </div>
-            <div className="text-right">
-              <div>TE: 14.2ms • TR: 480ms</div>
-              <div className="text-[#ECE8E0]/90 font-semibold">{presets[activePreset].window} {presets[activePreset].level}</div>
-            </div>
-          </div>
 
-          {/* Central Medical Anatomical Slice (CSS Filter reacts to active W/L preset) */}
-          <div 
-            className="absolute inset-0 flex items-center justify-center pointer-events-none transition-all duration-300"
-            style={{ filter: presets[activePreset].cssFilter }}
-          >
-            <svg viewBox="0 0 300 300" className="w-52 h-52">
-              {/* Outer skull boundary */}
-              <circle cx="150" cy="150" r="112" fill="none" stroke="#2B362E" strokeWidth="6" />
-              <circle cx="150" cy="150" r="102" fill="none" stroke={presets[activePreset].paletteColor} strokeWidth="1.8" strokeDasharray="3 2" />
-              
-              {/* Internal parenchyma / ventricles changing with currentFrame */}
-              <ellipse 
-                cx="126" 
-                cy="142" 
-                rx={18 + (currentFrame % 7) * 1.5} 
-                ry={34 - (currentFrame % 5) * 1.2} 
-                fill="#161E19" 
-                stroke="#315B4C" 
-                strokeWidth="1.4" 
-              />
-              <ellipse 
-                cx="174" 
-                cy="142" 
-                rx={18 + (currentFrame % 7) * 1.5} 
-                ry={34 - (currentFrame % 5) * 1.2} 
-                fill="#161E19" 
-                stroke="#315B4C" 
-                strokeWidth="1.4" 
-              />
-
-              {/* Anatomical sulci depth lines */}
-              <path d={`M 95 125 Q ${115 + (currentFrame % 4)} 150, 98 175`} stroke="#3A473E" strokeWidth="1.8" fill="none" />
-              <path d={`M 205 125 Q ${185 - (currentFrame % 4)} 150, 202 175`} stroke="#3A473E" strokeWidth="1.8" fill="none" />
-            </svg>
-          </div>
-
-          {/* Bottom Interactive Cine Controls Overlay */}
-          <div className="flex items-center justify-between z-10 pt-2 border-t border-[#19221C]">
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setCurrentFrame((prev) => Math.max(1, prev - 1))}
-                className="p-1 rounded bg-[#161E19] text-[#ECE8E0] hover:bg-[#315B4C] transition-colors cursor-pointer"
-                title="Previous Slice"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="px-3 py-1 rounded text-xs font-mono bg-[#161E19] text-[#ECE8E0] hover:bg-[#315B4C] transition-colors flex items-center gap-1.5 cursor-pointer"
-              >
-                {isPlaying ? <Pause className="w-3.5 h-3.5 text-[#315B4C]" /> : <Play className="w-3.5 h-3.5 text-[#B66B49]" />}
-                <span>{isPlaying ? 'PAUSE CINE LOOP' : 'RUN CINE (10 FPS)'}</span>
-              </button>
-              <button
-                onClick={() => setCurrentFrame((prev) => Math.min(totalFrames, prev + 1))}
-                className="p-1 rounded bg-[#161E19] text-[#ECE8E0] hover:bg-[#315B4C] transition-colors cursor-pointer"
-                title="Next Slice"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Frame Scrub Slider */}
-            <div className="flex items-center gap-2">
+            {/* Scrub Slider */}
+            <div className="w-full mt-4 z-10 px-4">
               <input
                 type="range"
                 min="1"
@@ -165,58 +146,96 @@ export const DICOMViewport: React.FC = () => {
                 value={currentFrame}
                 onChange={(e) => {
                   setIsPlaying(false);
-                  setCurrentFrame(parseInt(e.target.value, 10));
+                  setCurrentFrame(Number(e.target.value));
                 }}
-                className="w-24 sm:w-32 accent-[#315B4C] cursor-pointer"
+                className="w-full accent-[#00F2FE] cursor-pointer bg-white/10 h-1.5 rounded-lg"
               />
-              <span className="text-xs font-mono text-[#8A8E85]">{currentFrame}/{totalFrames}</span>
             </div>
           </div>
 
-        </div>
-
-        {/* Right: Workstation Tools & Presets Panel */}
-        <div className="lg:col-span-4 flex flex-col justify-between space-y-4">
-          <div>
-            <label className="block text-[10px] font-mono text-[#8A8E85] mb-1.5 uppercase">
-              Window / Level (LUT) Calibration
-            </label>
-            <div className="space-y-1.5">
-              {(['softTissue', 'bone', 'lung'] as const).map((key) => (
+          {/* Clinical Control Console & Architecture Specs */}
+          <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
+            
+            {/* Playback Controls */}
+            <div>
+              <span className="font-telemetry text-xs text-[#94A3B8] uppercase block mb-3">
+                Cine Playback Controls
+              </span>
+              <div className="flex items-center gap-3">
                 <button
-                  key={key}
-                  onClick={() => setActivePreset(key)}
-                  className={`w-full text-left px-3 py-2 rounded text-xs transition-colors flex items-center justify-between cursor-pointer ${
-                    activePreset === key
-                      ? 'bg-[#171916] text-[#F5F3EE] font-semibold'
-                      : 'bg-[#ECE8E0] text-[#595D56] hover:text-[#171916]'
+                  onClick={() => setIsPlaying(!isPlaying)}
+                  className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg font-display text-xs font-semibold tracking-wider uppercase transition-all cursor-pointer ${
+                    isPlaying 
+                      ? 'bg-[#FF5E7E] text-white shadow-lg shadow-[#FF5E7E]/20' 
+                      : 'bg-[#00F2FE] text-[#060911] shadow-lg shadow-[#00F2FE]/20 hover:bg-[#0AE4BA]'
                   }`}
                 >
-                  <span>{presets[key].label}</span>
-                  <span className="font-mono text-[10px] opacity-75">{presets[key].window}</span>
+                  {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                  <span>{isPlaying ? 'Halt Cine Loop' : 'Start Cine Loop'}</span>
                 </button>
-              ))}
+
+                <button
+                  onClick={() => {
+                    setIsPlaying(false);
+                    setCurrentFrame(prev => (prev <= 1 ? totalFrames : prev - 1));
+                  }}
+                  className="p-2.5 rounded-lg surface-panel-inset text-[#94A3B8] hover:text-white transition-colors"
+                  aria-label="Previous Frame"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+
+                <button
+                  onClick={() => {
+                    setIsPlaying(false);
+                    setCurrentFrame(prev => (prev >= totalFrames ? 1 : prev + 1));
+                  }}
+                  className="p-2.5 rounded-lg surface-panel-inset text-[#94A3B8] hover:text-white transition-colors"
+                  aria-label="Next Frame"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
+
+            {/* Window / Level Radiologic Presets */}
+            <div>
+              <span className="font-telemetry text-xs text-[#94A3B8] uppercase block mb-3">
+                Window / Level Presets (LUT Transform)
+              </span>
+              <div className="grid grid-cols-3 gap-2">
+                {(Object.keys(presets) as Array<keyof typeof presets>).map((key) => (
+                  <button
+                    key={key}
+                    onClick={() => setActivePreset(key)}
+                    className={`px-3 py-2 rounded-lg text-xs font-telemetry border text-center transition-all cursor-pointer ${
+                      activePreset === key
+                        ? 'bg-[#00F2FE]/10 border-[#00F2FE] text-[#00F2FE]'
+                        : 'surface-panel-inset border-white/5 text-[#94A3B8] hover:border-white/20'
+                    }`}
+                  >
+                    <span className="block font-medium">{presets[key].label}</span>
+                    <span className="text-[10px] text-[#64748B] block mt-0.5">{presets[key].window}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Architecture Highlights */}
+            <div className="p-4 rounded-xl surface-panel-inset border border-white/5 space-y-2 text-xs">
+              <div className="flex items-center gap-2 text-white font-medium">
+                <Monitor className="w-4 h-4 text-[#0AE4BA]" />
+                <span>Qt / C++ Architectural Pattern</span>
+              </div>
+              <p className="text-[#94A3B8] leading-relaxed">
+                Separates file IO and DICOM header parsing into worker threads, streaming RGBA pixel buffers directly into OpenGL textures without blocking the clinical UI.
+              </p>
+            </div>
+
           </div>
 
-          <div className="p-3.5 rounded bg-[#ECE8E0]/70 border border-[#D9D5CC] text-xs">
-            <span className="font-mono text-[10px] text-[#8A8E85] uppercase block mb-1">
-              Engineering Architecture
-            </span>
-            <p className="text-[#171916] leading-relaxed font-normal">
-              Contributed to modular Qt C++ viewports with asynchronous data buffering to maintain fluid 60 FPS user navigation without UI thread stalls.
-            </p>
-          </div>
         </div>
-
       </div>
-
-      {/* Compliance Disclaimer */}
-      <div className="p-2.5 rounded bg-[#ECE8E0]/60 border border-[#D9D5CC] flex items-center gap-2 text-[11px] font-mono text-[#595D56]">
-        <Info className="w-3.5 h-3.5 text-[#B66B49] shrink-0" />
-        <span>Demonstration mode: Illustrative workstation viewport architecture. No proprietary employer source code or clinical patient identifiers.</span>
-      </div>
-
-    </div>
+    </section>
   );
 };

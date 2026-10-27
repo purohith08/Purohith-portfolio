@@ -1,107 +1,82 @@
-import React from 'react';
-import { Info } from 'lucide-react';
+import React, { useState } from 'react';
 import { skillsData } from '../../data/skills';
-import type { EvidenceLevel } from '../../data/skills';
 
 export const Skills: React.FC = () => {
-  const getBadgeStyle = (level: EvidenceLevel) => {
-    switch (level) {
-      case 'Used in a project':
-        return 'bg-[#ECE8E0] text-[#315B4C] border-[#D9D5CC] font-semibold';
-      case 'Working knowledge':
-        return 'bg-[#ECE8E0] text-[#595D56] border-[#D9D5CC]';
-      case 'Exploring':
-        return 'bg-[#ECE8E0]/50 text-[#8A8E85] border-[#D9D5CC]';
-    }
-  };
+  const [activeCategory, setActiveCategory] = useState<number>(0);
 
   return (
-    <section id="capabilities" className="py-28 px-6 sm:px-8 lg:px-12 max-w-7xl mx-auto border-t border-[#D9D5CC]">
+    <section id="skills" className="py-20 px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto border-t border-white/10">
       
-      {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 text-left">
         <div>
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-[#ECE8E0] text-[11px] font-mono text-[#595D56] mb-3">
-            <span>EVIDENCE-LED COMPETENCIES</span>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-2 h-2 rounded-full bg-[#0AE4BA] animate-pulse" />
+            <span className="badge-telemetry-emerald">SECTION 06: TECHNICAL PROFICIENCIES</span>
           </div>
-          <h2 className="font-editorial text-3xl sm:text-5xl font-normal text-[#171916] tracking-tight">
-            Technical Capabilities
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            Biomedical Engineering Competencies
           </h2>
         </div>
-        
-        {/* Evidence Legend */}
-        <div className="p-3 rounded-lg bg-[#ECE8E0]/70 border border-[#D9D5CC] text-xs font-mono flex flex-wrap gap-4 items-center">
-          <span className="text-[#8A8E85] font-semibold">Evidence Level:</span>
-          <span className="flex items-center gap-1.5 text-[#315B4C]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#315B4C]" />
-            Used in a Project
-          </span>
-          <span className="flex items-center gap-1.5 text-[#595D56]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#8A8E85]" />
-            Working Knowledge
-          </span>
-        </div>
+        <p className="text-sm text-[#94A3B8] max-w-md mt-4 md:mt-0 font-sans">
+          Curated matrix across medical imaging standards, signal processing & computational ML, desktop software systems, and embedded firmware.
+        </p>
       </div>
 
-      {/* Skills Matrix Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {skillsData.map((category, idx) => (
-          <div
-            key={category.category}
-            className="surface-card rounded-xl p-6 border border-[#D9D5CC] flex flex-col justify-between"
+      {/* Category Tabs */}
+      <div className="flex flex-wrap gap-2 mb-8">
+        {skillsData.map((cat, idx) => (
+          <button
+            key={idx}
+            onClick={() => setActiveCategory(idx)}
+            className={`px-4 py-2 rounded-lg font-display text-xs font-semibold tracking-wide border transition-all cursor-pointer ${
+              activeCategory === idx
+                ? 'bg-[#00F2FE]/10 border-[#00F2FE] text-[#00F2FE]'
+                : 'surface-panel-inset border-white/5 text-[#94A3B8] hover:border-white/20 hover:text-white'
+            }`}
           >
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-mono text-[#8A8E85]">
-                  DOMAIN 0{idx + 1}
-                </span>
-                <span className="text-[10px] font-mono text-[#8A8E85]">
-                  {category.skills.length} competencies
-                </span>
-              </div>
-
-              <h3 className="font-editorial text-xl text-[#171916] mb-1">
-                {category.category}
-              </h3>
-              
-              <p className="text-xs text-[#595D56] mb-5 leading-relaxed font-normal">
-                {category.description}
-              </p>
-
-              {/* Individual Skill Items */}
-              <div className="space-y-2.5">
-                {category.skills.map((skill) => (
-                  <div
-                    key={skill.name}
-                    className="p-3 rounded bg-[#ECE8E0]/50 border border-[#D9D5CC]/80"
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-semibold text-[#171916]">
-                        {skill.name}
-                      </span>
-                      <span
-                        className={`px-1.5 py-0.5 rounded text-[10px] font-mono border ${getBadgeStyle(
-                          skill.level
-                        )}`}
-                      >
-                        {skill.level}
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-[#595D56] leading-normal font-normal">
-                      {skill.context}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-5 pt-3 border-t border-[#D9D5CC] flex items-center gap-2 text-[10px] font-mono text-[#8A8E85]">
-              <Info className="w-3 h-3 text-[#595D56]" />
-              <span>Validated against verifiable repository & project artifacts</span>
-            </div>
-
-          </div>
+            {cat.category}
+          </button>
         ))}
+      </div>
+
+      {/* Active Category Skills Grid */}
+      <div className="surface-instrument rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl text-left">
+        <div className="mb-6 pb-4 border-b border-white/10">
+          <h3 className="font-display text-xl font-bold text-white mb-1">
+            {skillsData[activeCategory].category}
+          </h3>
+          <p className="text-xs text-[#94A3B8] font-sans">
+            {skillsData[activeCategory].description}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {skillsData[activeCategory].skills.map((skill, i) => (
+            <div
+              key={i}
+              className="p-4 rounded-xl surface-panel-inset border border-white/5 flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-display text-sm font-bold text-white">
+                    {skill.name}
+                  </span>
+                  <span className={`text-[10px] font-telemetry px-1.5 py-0.5 rounded ${
+                    skill.level === 'Used in a project' 
+                      ? 'bg-[#0AE4BA]/10 text-[#0AE4BA] border border-[#0AE4BA]/30'
+                      : 'bg-white/5 text-[#94A3B8]'
+                  }`}>
+                    {skill.level}
+                  </span>
+                </div>
+                <p className="text-xs text-[#94A3B8] leading-relaxed">
+                  {skill.context}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
     </section>

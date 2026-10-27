@@ -2,116 +2,145 @@
 
 @layer base {
   :root {
-    --color-porcelain: #F5F3EE;
-    --color-porcelain-dark: #ECE8E0;
-    --color-ink: #171916;
-    --color-ink-muted: #595D56;
-    --color-ink-subtle: #8A8E85;
-    --color-stone: #D9D5CC;
-    --color-stone-light: #E8E5DD;
-    --color-stone-hairline: rgba(23, 25, 22, 0.08);
-    --color-forest: #315B4C;
-    --color-forest-dark: #234337;
-    --color-copper: #B66B49;
-    --color-white: #FFFFFF;
+    --color-bg-base: #060911;
+    --color-bg-panel: #0A1120;
+    --color-bg-panel-elevated: #0F1A2E;
+    --color-bg-card: rgba(10, 17, 32, 0.75);
     
-    --font-serif: "Newsreader", "Instrument Serif", Georgia, serif;
-    --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    --color-border-subtle: rgba(255, 255, 255, 0.07);
+    --color-border-medium: rgba(255, 255, 255, 0.14);
+    --color-border-glow: rgba(0, 242, 254, 0.35);
+
+    --color-cyan-glow: #00F2FE;
+    --color-teal-accent: #0AE4BA;
+    --color-cobalt-signal: #4E80EE;
+    --color-ruby-alert: #FF5E7E;
+
+    --color-text-primary: #F1F5F9;
+    --color-text-secondary: #94A3B8;
+    --color-text-muted: #64748B;
+    --color-text-code: #38BDF8;
+
+    --font-heading: "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
   }
 
   html {
     scroll-behavior: smooth;
-    background-color: var(--color-porcelain);
-    color: var(--color-ink);
+    background-color: var(--color-bg-base);
+    color: var(--color-text-primary);
     font-family: var(--font-sans);
   }
 
   body {
     margin: 0;
     padding: 0;
-    background-color: var(--color-porcelain);
-    color: var(--color-ink);
+    background-color: var(--color-bg-base);
+    color: var(--color-text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Refined, quiet architectural scrollbar */
+  /* Sleek scientific instrument scrollbar */
   ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--color-porcelain);
+    background: #060911;
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--color-stone);
-    border-radius: 2px;
+    background: #1E293B;
+    border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-ink-subtle);
+    background: #334155;
   }
 }
 
-/* Editorial Typography Utilities */
-.font-editorial {
-  font-family: var(--font-serif);
+/* Typography Utility Classes */
+.font-display {
+  font-family: var(--font-heading);
 }
 
-.font-editorial-italic {
-  font-family: var(--font-serif);
-  font-style: italic;
-}
-
-.font-tech-mono {
+.font-telemetry {
   font-family: var(--font-mono);
 }
 
-/* Tactile Surface Classes */
-.surface-card {
-  background: var(--color-white);
-  border: 1px solid var(--color-stone);
-  box-shadow: 0 1px 3px 0 rgba(23, 25, 22, 0.03), 0 1px 2px -1px rgba(23, 25, 22, 0.03);
+/* Precision Grid & Scanline Backgrounds */
+.bg-lab-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
-.surface-stone {
-  background: var(--color-porcelain-dark);
-  border: 1px solid var(--color-stone);
+.bg-lab-radial {
+  background: radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.08) 0%, rgba(6, 9, 17, 0) 70%);
 }
 
-.surface-darkroom {
-  background: #111411;
-  color: #F5F3EE;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* Scientific Glassmorphism Surfaces */
+.surface-instrument {
+  background: rgba(10, 17, 32, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.hairline-b {
-  border-bottom: 1px solid var(--color-stone-hairline);
+.surface-instrument-card {
+  background: linear-gradient(145deg, rgba(15, 26, 46, 0.7) 0%, rgba(10, 17, 32, 0.85) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.hairline-t {
-  border-top: 1px solid var(--color-stone-hairline);
+.surface-instrument-card:hover {
+  border-color: rgba(0, 242, 254, 0.3);
+  box-shadow: 0 10px 30px -10px rgba(0, 242, 254, 0.15);
 }
 
-.hairline-r {
-  border-right: 1px solid var(--color-stone-hairline);
+.surface-panel-inset {
+  background: rgba(6, 9, 17, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.hairline-l {
-  border-left: 1px solid var(--color-stone-hairline);
+/* Telemetry Badges */
+.badge-telemetry {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.25rem;
+  background: rgba(0, 242, 254, 0.08);
+  border: 1px solid rgba(0, 242, 254, 0.25);
+  color: #00F2FE;
 }
 
-.hairline-all {
-  border: 1px solid var(--color-stone-hairline);
+.badge-telemetry-emerald {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.25rem;
+  background: rgba(10, 228, 186, 0.08);
+  border: 1px solid rgba(10, 228, 186, 0.25);
+  color: #0AE4BA;
 }
 
-/* Subtle micro-interactions */
-.interactive-hover {
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+/* Subtle Biosignal Glow Animations */
+@keyframes signalPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.96);
+  }
 }
 
-.interactive-hover:hover {
-  border-color: var(--color-forest);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(23, 25, 22, 0.06);
+.animate-signal-pulse {
+  animation: signalPulse 2.5s infinite ease-in-out;
 }

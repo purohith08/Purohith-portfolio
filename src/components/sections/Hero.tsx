@@ -1,150 +1,157 @@
 import React from 'react';
-import { ArrowDownRight, Mail, Compass } from 'lucide-react';
+import { ArrowDownRight, Layers, Activity, Cpu, Terminal, ShieldCheck } from 'lucide-react';
 import { profileData } from '../../data/profile';
 import { GithubIcon, LinkedinIcon } from '../ui/Icons';
 
 interface HeroProps {
-  onExploreClick?: () => void;
+  onExploreProjects?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
+export const Hero: React.FC<HeroProps> = () => {
   return (
-    <section className="relative min-h-[92vh] flex items-center pt-28 pb-16 px-6 sm:px-8 lg:px-12 max-w-7xl mx-auto">
-      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center z-10">
+    <section id="hero" className="relative min-h-[92vh] flex items-center pt-32 pb-16 px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto z-10">
+      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         
-        {/* Left Column: Asymmetric Editorial Typography */}
-        <div className="lg:col-span-7 flex flex-col items-start text-left">
+        {/* Left Column: Asymmetrical Precision Scientific Information */}
+        <div className="lg:col-span-8 flex flex-col items-start text-left">
           
-          {/* Status Label */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#ECE8E0] border border-[#D9D5CC] text-[11px] font-mono text-[#595D56] mb-6 tracking-wide">
-            <span className="w-2 h-2 rounded-full bg-[#315B4C]" />
-            <span className="font-semibold text-[#171916]">S. PUROHITH</span>
-            <span className="text-[#8A8E85]">/</span>
-            <span>BIOMEDICAL ENGINEERING & SOFTWARE</span>
+          {/* Instrument Status Ribbon */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0F1A2E]/90 border border-white/10 text-xs font-telemetry text-[#94A3B8] mb-6 shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-[#0AE4BA] animate-pulse" />
+            <span className="text-[#00F2FE] font-medium">STATUS: ACTIVE RESEARCH & DEV</span>
+            <span className="text-white/20">|</span>
+            <span className="text-[#F1F5F9]">TRICHY, INDIA</span>
           </div>
 
-          {/* Primary Editorial Headline */}
-          <h1 className="font-editorial text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-[#171916] leading-[1.06] mb-6">
+          {/* Headline: Medical Systems & Biosignals */}
+          <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08] mb-6">
             Engineering software for{' '}
-            <span className="font-editorial-italic font-normal text-[#315B4C]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F2FE] via-[#0AE4BA] to-[#4E80EE]">
               medical imaging
             </span>{' '}
             and physiological signals.
           </h1>
 
-          {/* Clear, quiet value proposition */}
-          <p className="text-base sm:text-lg text-[#595D56] max-w-xl font-normal leading-relaxed mb-8">
-            Combining biomedical engineering domain rigor with native C++, Qt, Python pipelines, and deep motor-imagery signal processing.
+          {/* Direct, domain-rigorous proposition */}
+          <p className="text-base sm:text-lg text-[#94A3B8] max-w-2xl font-sans leading-relaxed mb-8">
+            {profileData.shortBio}
           </p>
 
-          {/* Recruiter First-Actions */}
-          <div className="flex flex-wrap items-center gap-3.5 mb-10">
-            <button
-              onClick={onExploreClick}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-[#315B4C] text-[#F5F3EE] hover:bg-[#234337] text-xs font-semibold tracking-wide transition-colors shadow-sm cursor-pointer"
-            >
-              <Compass className="w-4 h-4 text-[#D9D5CC]" />
-              <span>Explore 3D Biomedical World</span>
-            </button>
-
+          {/* Quick-Action Command Line & CTA Links */}
+          <div className="flex flex-wrap items-center gap-4 mb-10">
             <a
-              href="#work"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-[#171916] text-[#F5F3EE] hover:bg-[#315B4C] text-xs font-semibold tracking-wide transition-colors shadow-xs"
+              href="#imaging"
+              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-lg bg-[#00F2FE] text-[#060911] hover:bg-[#0AE4BA] font-display font-semibold text-xs tracking-wider uppercase transition-all shadow-lg shadow-[#00F2FE]/20"
             >
-              <span>Selected Work</span>
-              <ArrowDownRight className="w-3.5 h-3.5" />
+              <span>Explore Medical Viewport</span>
+              <ArrowDownRight className="w-4 h-4" />
             </a>
 
             <a
-              href={`mailto:${profileData.contact.email}`}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded border border-[#D9D5CC] bg-[#FFFFFF] hover:border-[#171916] text-[#171916] text-xs font-medium transition-colors"
+              href="#signals"
+              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-lg bg-[#0F1A2E] border border-white/10 text-[#F1F5F9] hover:border-[#00F2FE]/50 hover:text-[#00F2FE] font-display font-medium text-xs tracking-wider uppercase transition-all"
             >
-              <Mail className="w-3.5 h-3.5 text-[#595D56]" />
-              <span>Contact Directly</span>
+              <Activity className="w-4 h-4 text-[#0AE4BA]" />
+              <span>EEG / sEMG Pipeline</span>
             </a>
 
-            <div className="flex items-center gap-2 ml-1">
+            <div className="flex items-center gap-2 pl-2 border-l border-white/10">
               <a
                 href={profileData.contact.gitHub}
                 target="_blank"
-                rel="noreferrer"
-                className="p-2 rounded border border-[#D9D5CC] bg-[#FFFFFF] text-[#595D56] hover:text-[#171916] hover:border-[#171916] transition-colors"
-                title="GitHub"
+                rel="noopener noreferrer"
+                aria-label="GitHub Profile"
+                className="p-2.5 rounded-lg bg-[#0A1120] border border-white/10 text-[#94A3B8] hover:text-[#00F2FE] hover:border-[#00F2FE]/40 transition-colors"
               >
                 <GithubIcon className="w-4 h-4" />
               </a>
               <a
                 href={profileData.contact.linkedIn}
                 target="_blank"
-                rel="noreferrer"
-                className="p-2 rounded border border-[#D9D5CC] bg-[#FFFFFF] text-[#595D56] hover:text-[#171916] hover:border-[#171916] transition-colors"
-                title="LinkedIn"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn Profile"
+                className="p-2.5 rounded-lg bg-[#0A1120] border border-white/10 text-[#94A3B8] hover:text-[#00F2FE] hover:border-[#00F2FE]/40 transition-colors"
               >
                 <LinkedinIcon className="w-4 h-4" />
               </a>
             </div>
           </div>
 
-          {/* Editorial Facts Row */}
-          <div className="w-full pt-6 border-t border-[#D9D5CC] grid grid-cols-2 sm:grid-cols-3 gap-6 text-left">
-            <div>
-              <div className="text-[10px] font-mono text-[#8A8E85] uppercase tracking-wider mb-1">
-                Primary Stack
+          {/* Verified Engineering Pillar Pills */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-3xl pt-6 border-t border-white/10">
+            <div className="surface-instrument-card p-3 rounded-lg flex items-center gap-3">
+              <div className="p-2 rounded bg-[#00F2FE]/10 text-[#00F2FE]">
+                <Layers className="w-4 h-4" />
               </div>
-              <div className="text-sm font-semibold text-[#171916]">
-                C++, Qt, Python
-              </div>
-              <div className="text-xs text-[#595D56]">
-                Desktop & Signal Pipelines
+              <div className="text-left">
+                <span className="font-telemetry text-[11px] text-[#94A3B8] block">Medical Desktop</span>
+                <span className="font-display text-xs font-semibold text-white">Qt C++ DICOM Cine</span>
               </div>
             </div>
 
-            <div>
-              <div className="text-[10px] font-mono text-[#8A8E85] uppercase tracking-wider mb-1">
-                Research Focus
+            <div className="surface-instrument-card p-3 rounded-lg flex items-center gap-3">
+              <div className="p-2 rounded bg-[#0AE4BA]/10 text-[#0AE4BA]">
+                <Activity className="w-4 h-4" />
               </div>
-              <div className="text-sm font-semibold text-[#171916]">
-                DEBEL-DRDO
-              </div>
-              <div className="text-xs text-[#595D56]">
-                sEMG Muscle Synergy Analysis
+              <div className="text-left">
+                <span className="font-telemetry text-[11px] text-[#94A3B8] block">Biosignal Processing</span>
+                <span className="font-display text-xs font-semibold text-white">EEG / sEMG / FBCSP</span>
               </div>
             </div>
 
-            <div className="col-span-2 sm:col-span-1">
-              <div className="text-[10px] font-mono text-[#8A8E85] uppercase tracking-wider mb-1">
-                Capstone Work
+            <div className="surface-instrument-card p-3 rounded-lg flex items-center gap-3">
+              <div className="p-2 rounded bg-[#4E80EE]/10 text-[#4E80EE]">
+                <Cpu className="w-4 h-4" />
               </div>
-              <div className="text-sm font-semibold text-[#171916]">
-                EEG Motor-Imagery
-              </div>
-              <div className="text-xs text-[#595D56]">
-                FBCSP + SVM / EEGNet
+              <div className="text-left">
+                <span className="font-telemetry text-[11px] text-[#94A3B8] block">Embedded Systems</span>
+                <span className="font-display text-xs font-semibold text-white">ESP32 / FreeRTOS / ADC</span>
               </div>
             </div>
           </div>
-
         </div>
 
-        {/* Right Column: Spatial Frame for 3D Art-Directed Scene */}
-        <div className="lg:col-span-5 h-[380px] sm:h-[460px] lg:h-[520px] relative rounded-xl border border-[#D9D5CC] bg-gradient-to-b from-[#ECE8E0]/40 to-[#F5F3EE] p-4 flex items-end justify-between shadow-xs overflow-hidden">
-          
-          {/* 3D Scene viewport background indicator */}
-          <div className="absolute top-4 left-4 z-20 flex items-center gap-2 text-[10px] font-mono text-[#595D56] bg-[#FFFFFF]/80 backdrop-blur-xs px-2.5 py-1 rounded border border-[#D9D5CC]">
-            <Compass className="w-3 h-3 text-[#315B4C]" />
-            <span>Interactive Neural Mesh & Volumetric Sweep</span>
-          </div>
+        {/* Right Column: Verified Laboratory Telemetry Data Card */}
+        <div className="lg:col-span-4 w-full">
+          <div className="surface-instrument rounded-2xl p-6 border border-white/10 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#00F2FE]/10 rounded-full blur-2xl pointer-events-none" />
+            
+            {/* Terminal Header */}
+            <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-4">
+              <div className="flex items-center gap-2">
+                <Terminal className="w-4 h-4 text-[#00F2FE]" />
+                <span className="font-telemetry text-xs text-white font-semibold">LAB TELEMETRY METRICS</span>
+              </div>
+              <span className="badge-telemetry-emerald text-[10px]">VERIFIED</span>
+            </div>
 
-          <div className="absolute top-4 right-4 z-20 text-[10px] font-mono text-[#8A8E85]">
-            FIG 0.1
-          </div>
+            {/* Metrics List from Profile Data */}
+            <div className="space-y-4 text-left">
+              {profileData.metricsSummary.map((metric, i) => (
+                <div key={i} className="p-3 rounded-lg surface-panel-inset">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="font-telemetry text-[11px] text-[#94A3B8] uppercase">
+                      {metric.label}
+                    </span>
+                    <span className="font-display text-sm font-semibold text-[#00F2FE]">
+                      {metric.value}
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#94A3B8] leading-tight">
+                    {metric.detail}
+                  </p>
+                </div>
+              ))}
+            </div>
 
-          {/* Caption footnote */}
-          <div className="z-20 w-full pt-3 border-t border-[#D9D5CC]/80 flex items-center justify-between text-[11px] font-mono text-[#595D56]">
-            <span>Drag to inspect spatial coordinates</span>
-            <span className="text-[#315B4C] font-semibold">60 FPS Restrained Rig</span>
+            {/* Notice / Security boundary */}
+            <div className="mt-5 pt-4 border-t border-white/10 flex items-start gap-2.5">
+              <ShieldCheck className="w-4 h-4 text-[#0AE4BA] shrink-0 mt-0.5" />
+              <p className="text-[11px] text-[#64748B] text-left leading-normal font-telemetry">
+                Public technical disclosure strictly adheres to commercial NDA and DRDO public security boundaries.
+              </p>
+            </div>
           </div>
-
         </div>
 
       </div>
