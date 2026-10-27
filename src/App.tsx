@@ -58,7 +58,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#060911] text-[#F1F5F9] flex flex-col relative selection:bg-[#00F2FE]/20 selection:text-[#00F2FE] overflow-x-hidden">
+    <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] flex flex-col relative selection:bg-[var(--signal-cyan)]/20 selection:text-[var(--signal-cyan)] overflow-x-hidden">
       
       {/* Background Precision Grid & Radial Gradient */}
       <div className="fixed inset-0 bg-lab-grid pointer-events-none opacity-50 z-0" />
