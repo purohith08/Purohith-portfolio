@@ -27,7 +27,8 @@ export const SignalWaveformStream: React.FC<SignalWaveformStreamProps> = ({
       return {
         id: chIdx,
         positions: pos,
-        color: chIdx === 0 ? '#00F2FE' : chIdx === 1 ? '#0AE4BA' : '#4E80EE',
+        // Option 2 Palette: #2A9D8F Highlight, #E9ECEF Secondary, #264653 Slate
+        color: chIdx === 0 ? '#2A9D8F' : chIdx === 1 ? '#E9ECEF' : '#264653',
         freqMult: 1.0 + chIdx * 0.4,
         phaseOffset: chIdx * 1.2,
       };

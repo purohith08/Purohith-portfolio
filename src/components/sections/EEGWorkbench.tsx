@@ -95,7 +95,7 @@ export const EEGWorkbench: React.FC = () => {
             Motor Imagery EEG Processing Pipeline
           </h2>
         </div>
-        <p className="text-sm text-[#94A3B8] max-w-md mt-4 md:mt-0 font-sans">
+        <p className="text-sm text-[#CBD5E1] max-w-md mt-4 md:mt-0 font-sans">
           MNE-Python & SciPy based feature extraction pipeline: digital filtering, spatial filtering via Filter Bank Common Spatial Patterns (FBCSP), and classification into prosthetic finger triggers.
         </p>
       </div>
@@ -114,8 +114,8 @@ export const EEGWorkbench: React.FC = () => {
               <div className="flex items-center gap-2 text-[#0AE4BA]">
                 <Activity className="w-4 h-4 animate-signal-pulse" />
                 <span className="font-semibold">CHANNEL: {selectedChannel}</span>
-                <span className="text-[#64748B]">|</span>
-                <span className="text-[#94A3B8]">{channelInfo[selectedChannel].label}</span>
+                <span className="text-white/20">|</span>
+                <span className="text-[#CBD5E1]">{channelInfo[selectedChannel].label}</span>
               </div>
               <div className="text-[#00F2FE]">
                 SAMPLING: 250 Hz | 24-BIT ADC
@@ -124,7 +124,7 @@ export const EEGWorkbench: React.FC = () => {
 
             {/* Oscilloscope SVG Waveform */}
             <div className="w-full my-6 flex items-center justify-center relative">
-              <svg viewBox="0 0 600 140" className="w-full h-36 overflow-visible">
+              <svg viewBox="0 0 600 140" className="w-full h-36 overflow-visible" aria-label="Simulated EEG biopotential voltage wave">
                 {/* Horizontal Zero Voltage Baseline */}
                 <line x1="0" y1="70" x2="600" y2="70" stroke="rgba(255,255,255,0.1)" strokeDasharray="4 4" />
                 
@@ -145,7 +145,7 @@ export const EEGWorkbench: React.FC = () => {
             </div>
 
             {/* Footer Status Indicators */}
-            <div className="flex items-center justify-between z-10 font-telemetry text-[11px] text-[#64748B] pt-2 border-t border-white/5">
+            <div className="flex items-center justify-between z-10 font-telemetry text-[11px] text-[#94A3B8] pt-2 border-t border-white/5">
               <div>STAGE: {pipelineStage.toUpperCase()}</div>
               <div>CLASSIFIER: FBCSP + SVM / EEGNET</div>
               <div>LATENCY: &lt; 18 ms</div>
@@ -157,18 +157,21 @@ export const EEGWorkbench: React.FC = () => {
             
             {/* Stage Selector */}
             <div>
-              <span className="font-telemetry text-xs text-[#94A3B8] uppercase block mb-3">
+              <span className="font-telemetry text-xs text-[#CBD5E1] uppercase block mb-3 font-semibold">
                 DSP Pipeline Stage
               </span>
-              <div className="space-y-2">
+              <div role="tablist" aria-label="EEG Pipeline Stages" className="space-y-2">
                 {stages.map((stage) => (
                   <button
                     key={stage.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={pipelineStage === stage.id}
                     onClick={() => setPipelineStage(stage.id)}
-                    className={`w-full p-3 rounded-lg border text-left transition-all cursor-pointer ${
+                    className={`w-full p-3 rounded-lg border text-left transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#0AE4BA] ${
                       pipelineStage === stage.id
                         ? 'bg-[#0AE4BA]/10 border-[#0AE4BA] text-white shadow-sm'
-                        : 'surface-panel-inset border-white/5 text-[#94A3B8] hover:border-white/20'
+                        : 'surface-panel-inset border-white/5 text-[#94A3B8] hover:border-white/20 hover:text-white'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
@@ -187,18 +190,21 @@ export const EEGWorkbench: React.FC = () => {
 
             {/* Channel Toggles */}
             <div>
-              <span className="font-telemetry text-xs text-[#94A3B8] uppercase block mb-3">
+              <span className="font-telemetry text-xs text-[#CBD5E1] uppercase block mb-3 font-semibold">
                 10-20 International Electrode
               </span>
-              <div className="grid grid-cols-3 gap-2">
+              <div role="tablist" aria-label="10-20 EEG Electrodes" className="grid grid-cols-3 gap-2">
                 {(['C3', 'Cz', 'C4'] as const).map((ch) => (
                   <button
                     key={ch}
+                    type="button"
+                    role="tab"
+                    aria-selected={selectedChannel === ch}
                     onClick={() => setSelectedChannel(ch)}
-                    className={`py-2 px-3 rounded-lg font-telemetry text-xs border transition-all cursor-pointer ${
+                    className={`py-2 px-3 rounded-lg font-telemetry text-xs border transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#00F2FE] ${
                       selectedChannel === ch
                         ? 'bg-[#00F2FE]/10 border-[#00F2FE] text-[#00F2FE] font-bold'
-                        : 'surface-panel-inset border-white/5 text-[#94A3B8] hover:border-white/20'
+                        : 'surface-panel-inset border-white/5 text-[#94A3B8] hover:border-white/20 hover:text-white'
                     }`}
                   >
                     {ch}
@@ -210,8 +216,10 @@ export const EEGWorkbench: React.FC = () => {
             {/* Play/Pause Toggle */}
             <div className="pt-2">
               <button
+                type="button"
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="w-full py-2.5 rounded-lg border border-white/10 surface-panel-inset text-xs font-display font-medium text-white hover:border-[#0AE4BA]/50 flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                aria-pressed={!isPlaying}
+                className="w-full py-2.5 rounded-lg border border-white/10 surface-panel-inset text-xs font-display font-medium text-white hover:border-[#0AE4BA]/50 flex items-center justify-center gap-2 cursor-pointer transition-colors focus:outline-none focus:ring-1 focus:ring-[#0AE4BA]"
               >
                 {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
                 <span>{isPlaying ? 'Freeze Biosignal Waveform' : 'Resume Real-time Acquisition'}</span>

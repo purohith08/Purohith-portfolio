@@ -74,7 +74,7 @@ export const Education: React.FC = () => {
             >
               <div className="flex items-center justify-between mb-1.5">
                 <span className="badge-telemetry text-[10px]">{act.category}</span>
-                <span className="text-[11px] font-telemetry text-[#64748B]">{act.period}</span>
+                <span className="text-[11px] font-telemetry text-[#94A3B8]">{act.period}</span>
               </div>
 
               <h4 className="font-display text-sm font-bold text-white mb-0.5">

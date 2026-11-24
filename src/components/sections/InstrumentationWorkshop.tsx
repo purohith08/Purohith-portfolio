@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Cpu, Zap, Activity, CheckCircle2 } from 'lucide-react';
+import { Cpu, CheckCircle2 } from 'lucide-react';
 
 export const InstrumentationWorkshop: React.FC = () => {
   const [activeStep, setActiveStep] = useState<number>(1);
@@ -69,7 +69,7 @@ export const InstrumentationWorkshop: React.FC = () => {
             Biomedical Instrumentation & Firmware Pipeline
           </h2>
         </div>
-        <p className="text-sm text-[#94A3B8] max-w-md mt-4 md:mt-0 font-sans">
+        <p className="text-sm text-[#CBD5E1] max-w-md mt-4 md:mt-0 font-sans">
           Physical bio-transducer coupling, high CMRR analog front ends, FreeRTOS deterministic acquisition, and UART kinematic servo control.
         </p>
       </div>
@@ -78,15 +78,19 @@ export const InstrumentationWorkshop: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Step Selector Ribbon */}
-        <div className="lg:col-span-5 space-y-3 text-left">
+        <div role="tablist" aria-label="Instrumentation pipeline stages" className="lg:col-span-5 space-y-3 text-left">
           {pipelineSteps.map((item) => (
             <button
               key={item.step}
+              type="button"
+              role="tab"
+              aria-selected={activeStep === item.step}
+              aria-controls="instrumentation-details-panel"
               onClick={() => setActiveStep(item.step)}
-              className={`w-full p-4 rounded-xl border text-left transition-all cursor-pointer ${
+              className={`w-full p-4 rounded-xl border text-left transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#00F2FE] ${
                 activeStep === item.step
                   ? 'surface-instrument-card border-[#00F2FE] shadow-lg shadow-[#00F2FE]/10'
-                  : 'surface-panel-inset border-white/5 opacity-70 hover:opacity-100 hover:border-white/20'
+                  : 'surface-panel-inset border-white/5 opacity-80 hover:opacity-100 hover:border-white/20'
               }`}
             >
               <div className="flex items-center justify-between mb-1">
@@ -100,7 +104,7 @@ export const InstrumentationWorkshop: React.FC = () => {
               <h3 className="font-display text-base font-semibold text-white mb-1">
                 {item.title}
               </h3>
-              <p className="text-xs text-[#94A3B8] font-sans">
+              <p className="text-xs text-[#CBD5E1] font-sans">
                 {item.summary}
               </p>
             </button>
@@ -108,7 +112,12 @@ export const InstrumentationWorkshop: React.FC = () => {
         </div>
 
         {/* Detailed Circuit / Firmware Telemetry Inspector */}
-        <div className="lg:col-span-7 surface-instrument rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl text-left">
+        <div 
+          id="instrumentation-details-panel"
+          role="region"
+          aria-label="Instrumentation Stage Specifications"
+          className="lg:col-span-7 surface-instrument rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl text-left"
+        >
           {(() => {
             const current = pipelineSteps.find(s => s.step === activeStep)!;
             return (
@@ -126,13 +135,13 @@ export const InstrumentationWorkshop: React.FC = () => {
                 </div>
 
                 {/* Narrative Detail */}
-                <p className="text-sm text-[#94A3B8] leading-relaxed font-sans">
+                <p className="text-sm text-[#CBD5E1] leading-relaxed font-sans">
                   {current.detail}
                 </p>
 
                 {/* Key Engineering Specifications */}
                 <div>
-                  <span className="font-telemetry text-xs text-[#00F2FE] uppercase block mb-3">
+                  <span className="font-telemetry text-xs text-[#00F2FE] uppercase block mb-3 font-semibold">
                     Laboratory Architecture & Specifications
                   </span>
                   <div className="space-y-2.5">
@@ -144,18 +153,6 @@ export const InstrumentationWorkshop: React.FC = () => {
                         </span>
                       </div>
                     ))}
-                  </div>
-                </div>
-
-                {/* Live Simulation Flow Bar */}
-                <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-telemetry text-[#64748B]">
-                  <div className="flex items-center gap-1.5 text-[#0AE4BA]">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>IMPEDANCE MATCHED</span>
-                  </div>
-                  <div className="flex items-center gap-1.5 text-[#00F2FE]">
-                    <Activity className="w-3.5 h-3.5" />
-                    <span>DETERMINISTIC LATENCY &lt; 15MS</span>
                   </div>
                 </div>
 

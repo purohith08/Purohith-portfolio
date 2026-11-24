@@ -1,158 +1,228 @@
-import React from 'react';
-import { ArrowDownRight, Layers, Activity, Cpu, Terminal, ShieldCheck } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowDown, Briefcase, Radio, Mail, FileText, ArrowUpRight } from 'lucide-react';
 import { profileData } from '../../data/profile';
 import { GithubIcon, LinkedinIcon } from '../ui/Icons';
+import { useSectionParallax } from '../../hooks/useSectionParallax';
 
-interface HeroProps {
-  onExploreProjects?: () => void;
-}
+export const Hero: React.FC = () => {
+  const [mounted, setMounted] = useState(false);
 
-export const Hero: React.FC<HeroProps> = () => {
+  // Parallax scroll transforms for differential multi-plane motion
+  const { ref, foregroundY, backgroundY, accentY } = useSectionParallax<HTMLElement>({
+    foregroundRange: [0, -60],
+    backgroundRange: [0, -20],
+    accentRange: [0, -90],
+    clamp: false,
+  });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 50);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <section id="hero" className="relative min-h-[92vh] flex items-center pt-32 pb-16 px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto z-10">
-      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <section
+      ref={ref}
+      id="hero"
+      aria-label="Introduction & Professional Summary"
+      className="relative min-h-[92vh] flex flex-col justify-start pt-6 sm:pt-8 pb-16 px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto z-10 text-left"
+    >
+      <div className="max-w-4xl relative z-30 pr-24 sm:pr-32 lg:pr-0">
         
-        {/* Left Column: Asymmetrical Precision Scientific Information */}
-        <div className="lg:col-span-8 flex flex-col items-start text-left">
-          
-          {/* Instrument Status Ribbon */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0F1A2E]/90 border border-white/10 text-xs font-telemetry text-[#94A3B8] mb-6 shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-[#0AE4BA] animate-pulse" />
-            <span className="text-[#00F2FE] font-medium">STATUS: ACTIVE RESEARCH & DEV</span>
-            <span className="text-white/20">|</span>
-            <span className="text-[#F1F5F9]">TRICHY, INDIA</span>
+        {/* Subtle Horizontal Medical Laser Accent (Option 2 Highlight #2A9D8F) */}
+        <div className="relative w-full h-[1px] bg-white/10 overflow-hidden mb-6">
+          <div
+            className={`absolute top-0 bottom-0 bg-gradient-to-r from-transparent via-[#2A9D8F] to-transparent w-48 transition-all duration-1000 ease-out ${
+              mounted ? 'translate-x-[450%] opacity-0' : '-translate-x-full opacity-100'
+            }`}
+            style={{ boxShadow: '0 0 16px #2A9D8F' }}
+          />
+        </div>
+
+        {/* Name & Title — Aligned at Menu Bar Height (Secondary #E9ECEF) */}
+        <motion.div
+          style={{ y: backgroundY }}
+          className={`transition-all duration-700 ease-out transform ${
+            mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          }`}
+        >
+          <h1 className="font-display tracking-tight text-[#E9ECEF] mb-6">
+            <span className="block text-5xl sm:text-7xl lg:text-8xl font-black text-[#E9ECEF] tracking-[-0.03em] leading-none mb-3">
+              {profileData.name}
+            </span>
+            <span className="block text-xl sm:text-3xl lg:text-4xl font-semibold text-[#CED4DA] tracking-tight">
+              Biomedical Engineer & Medical Software Developer
+            </span>
+          </h1>
+        </motion.div>
+
+        {/* Bio & Capabilities Index — Foreground parallax glide */}
+        <motion.div
+          style={{ y: foregroundY }}
+          className="will-change-transform"
+        >
+          {/* Bio — Clear, scannable, high-contrast editorial prose */}
+          <div
+            className={`transition-all duration-700 delay-150 ease-out transform ${
+              mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
+          >
+            <p className="text-base sm:text-lg text-[#ADB5BD] max-w-3xl font-sans leading-relaxed mb-8">
+              {profileData.shortBio}
+            </p>
           </div>
 
-          {/* Headline: Medical Systems & Biosignals */}
-          <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08] mb-6">
-            Engineering software for{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F2FE] via-[#0AE4BA] to-[#4E80EE]">
-              medical imaging
-            </span>{' '}
-            and physiological signals.
-          </h1>
+          {/* Architectural Capabilities Index (Option 2 Tokens: #264653 Primary Slate, #2A9D8F Highlight) */}
+          <div
+            className={`grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 py-6 border-y border-white/10 transition-all duration-700 delay-300 ease-out transform ${
+              mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
+          >
+            <div className="pr-4 border-b md:border-b-0 md:border-r border-white/10 pb-4 md:pb-0">
+              <span className="font-telemetry text-[11px] font-bold text-[#2A9D8F] tracking-widest uppercase block mb-1">
+                01 / WORKSTATIONS
+              </span>
+              <p className="font-sans text-xs text-[#CED4DA] leading-relaxed">
+                Medical desktop applications (Qt6 / C++20), multi-threaded DICOM cine rendering, and PACS workflow integration.
+              </p>
+            </div>
 
-          {/* Direct, domain-rigorous proposition */}
-          <p className="text-base sm:text-lg text-[#94A3B8] max-w-2xl font-sans leading-relaxed mb-8">
-            {profileData.shortBio}
-          </p>
+            <div className="pr-4 border-b md:border-b-0 md:border-r border-white/10 pb-4 md:pb-0">
+              <span className="font-telemetry text-[11px] font-bold text-[#2A9D8F] tracking-widest uppercase block mb-1">
+                02 / BIOSIGNALS & BCI
+              </span>
+              <p className="font-sans text-xs text-[#CED4DA] leading-relaxed">
+                EEG motor imagery classification (CSP + LDA/SVM), surface EMG neuromuscular synergy decoding, and real-time DSP pipelines.
+              </p>
+            </div>
 
-          {/* Quick-Action Command Line & CTA Links */}
-          <div className="flex flex-wrap items-center gap-4 mb-10">
-            <a
-              href="#imaging"
-              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-lg bg-[#00F2FE] text-[#060911] hover:bg-[#0AE4BA] font-display font-semibold text-xs tracking-wider uppercase transition-all shadow-lg shadow-[#00F2FE]/20"
+            <div>
+              <span className="font-telemetry text-[11px] font-bold text-[#CED4DA] tracking-widest uppercase block mb-1">
+                03 / RESEARCH RIGOR
+              </span>
+              <p className="font-sans text-xs text-[#CED4DA] leading-relaxed">
+                Defense research at DEBEL-DRDO on acoustic impedance & human telemetry; hospital clinical engineering at GVN Riverside.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Clear Action Triggers & Telemetry — Accent parallax layer */}
+        <motion.div
+          style={{ y: accentY }}
+          className="will-change-transform"
+        >
+          <div
+            className={`flex flex-wrap items-center gap-3.5 mb-12 transition-all duration-700 delay-500 ease-out transform ${
+              mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
+          >
+            {/* Primary Action — Option 2 Highlight #2A9D8F with motion.dev spring */}
+            <motion.a
+              href="#experience"
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.96, y: 1 }}
+              transition={{ type: 'spring', stiffness: 450, damping: 20 }}
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#2A9D8F] hover:bg-[#238276] text-[#0B1317] font-display font-bold text-xs tracking-wider uppercase transition-colors shadow-xl shadow-[#2A9D8F]/20 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#2A9D8F]"
             >
-              <span>Explore Medical Viewport</span>
-              <ArrowDownRight className="w-4 h-4" />
-            </a>
+              <Briefcase className="w-4 h-4 text-[#0B1317]" />
+              <span>Work Experience</span>
+              <ArrowDown className="w-4 h-4 text-[#0B1317]" />
+            </motion.a>
 
-            <a
-              href="#signals"
-              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-lg bg-[#0F1A2E] border border-white/10 text-[#F1F5F9] hover:border-[#00F2FE]/50 hover:text-[#00F2FE] font-display font-medium text-xs tracking-wider uppercase transition-all"
+            {/* Secondary Action — Option 2 Slate #264653 with spring */}
+            <motion.a
+              href="#projects"
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.96, y: 1 }}
+              transition={{ type: 'spring', stiffness: 450, damping: 20 }}
+              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full bg-[#16272F] hover:bg-[#264653] border border-[#264653] hover:border-[#2A9D8F] text-[#E9ECEF] font-display font-medium text-xs tracking-wider uppercase transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#2A9D8F]"
             >
-              <Activity className="w-4 h-4 text-[#0AE4BA]" />
-              <span>EEG / sEMG Pipeline</span>
-            </a>
+              <Radio className="w-4 h-4 text-[#2A9D8F]" />
+              <span>Selected Projects</span>
+            </motion.a>
 
-            <div className="flex items-center gap-2 pl-2 border-l border-white/10">
-              <a
+            {/* Tertiary Action */}
+            <motion.a
+              href="#contact"
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.96, y: 1 }}
+              transition={{ type: 'spring', stiffness: 450, damping: 20 }}
+              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full bg-[#16272F] hover:bg-[#264653] border border-[#264653] hover:border-[#2A9D8F] text-[#E9ECEF] font-display font-medium text-xs tracking-wider uppercase transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#2A9D8F]"
+            >
+              <Mail className="w-4 h-4 text-[#2A9D8F]" />
+              <span>Contact</span>
+            </motion.a>
+
+            {/* Resume PDF Action */}
+            <motion.a
+              href="Purohith-Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open S. Purohith CV / Resume (PDF)"
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.96, y: 1 }}
+              transition={{ type: 'spring', stiffness: 450, damping: 20 }}
+              className="inline-flex items-center gap-1.5 px-4 py-3.5 rounded-full bg-[#16272F]/80 hover:bg-[#264653] border border-white/10 hover:border-[#2A9D8F]/50 text-[#CED4DA] hover:text-[#E9ECEF] font-display font-medium text-xs tracking-wider uppercase transition-colors"
+            >
+              <FileText className="w-4 h-4 text-[#2A9D8F]" />
+              <span>Resume</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#ADB5BD]" />
+            </motion.a>
+
+            {/* External Social Profiles */}
+            <div className="flex items-center gap-2 pl-1">
+              <motion.a
                 href={profileData.contact.gitHub}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub Profile"
-                className="p-2.5 rounded-lg bg-[#0A1120] border border-white/10 text-[#94A3B8] hover:text-[#00F2FE] hover:border-[#00F2FE]/40 transition-colors"
+                whileHover={{ scale: 1.12, y: -2 }}
+                whileTap={{ scale: 0.92 }}
+                transition={{ type: 'spring', stiffness: 450, damping: 20 }}
+                className="p-3 rounded-full bg-[#16272F] border border-[#264653] text-[#CED4DA] hover:text-[#2A9D8F] hover:border-[#2A9D8F]/50 transition-colors"
               >
                 <GithubIcon className="w-4 h-4" />
-              </a>
-              <a
+              </motion.a>
+              <motion.a
                 href={profileData.contact.linkedIn}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn Profile"
-                className="p-2.5 rounded-lg bg-[#0A1120] border border-white/10 text-[#94A3B8] hover:text-[#00F2FE] hover:border-[#00F2FE]/40 transition-colors"
+                whileHover={{ scale: 1.12, y: -2 }}
+                whileTap={{ scale: 0.92 }}
+                transition={{ type: 'spring', stiffness: 450, damping: 20 }}
+                className="p-3 rounded-full bg-[#16272F] border border-[#264653] text-[#CED4DA] hover:text-[#2A9D8F] hover:border-[#2A9D8F]/50 transition-colors"
               >
                 <LinkedinIcon className="w-4 h-4" />
-              </a>
+              </motion.a>
             </div>
           </div>
 
-          {/* Verified Engineering Pillar Pills */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-3xl pt-6 border-t border-white/10">
-            <div className="surface-instrument-card p-3 rounded-lg flex items-center gap-3">
-              <div className="p-2 rounded bg-[#00F2FE]/10 text-[#00F2FE]">
-                <Layers className="w-4 h-4" />
+          {/* Architectural Telemetry Matrix Bar */}
+          <div
+            className={`grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-white/10 transition-all duration-700 delay-700 ease-out transform ${
+              mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
+          >
+            {profileData.metricsSummary.map((m, i) => (
+              <div key={i} className="space-y-0.5">
+                <span className="font-telemetry text-[10px] text-[#ADB5BD] uppercase tracking-wider block">
+                  {m.label}
+                </span>
+                <span className="font-display text-sm font-bold text-[#E9ECEF] block">
+                  {m.value}
+                </span>
+                <span className="font-telemetry text-[11px] text-[#CED4DA] block">
+                  {m.detail}
+                </span>
               </div>
-              <div className="text-left">
-                <span className="font-telemetry text-[11px] text-[#94A3B8] block">Medical Desktop</span>
-                <span className="font-display text-xs font-semibold text-white">Qt C++ DICOM Cine</span>
-              </div>
-            </div>
-
-            <div className="surface-instrument-card p-3 rounded-lg flex items-center gap-3">
-              <div className="p-2 rounded bg-[#0AE4BA]/10 text-[#0AE4BA]">
-                <Activity className="w-4 h-4" />
-              </div>
-              <div className="text-left">
-                <span className="font-telemetry text-[11px] text-[#94A3B8] block">Biosignal Processing</span>
-                <span className="font-display text-xs font-semibold text-white">EEG / sEMG / FBCSP</span>
-              </div>
-            </div>
-
-            <div className="surface-instrument-card p-3 rounded-lg flex items-center gap-3">
-              <div className="p-2 rounded bg-[#4E80EE]/10 text-[#4E80EE]">
-                <Cpu className="w-4 h-4" />
-              </div>
-              <div className="text-left">
-                <span className="font-telemetry text-[11px] text-[#94A3B8] block">Embedded Systems</span>
-                <span className="font-display text-xs font-semibold text-white">ESP32 / FreeRTOS / ADC</span>
-              </div>
-            </div>
+            ))}
           </div>
-        </div>
-
-        {/* Right Column: Verified Laboratory Telemetry Data Card */}
-        <div className="lg:col-span-4 w-full">
-          <div className="surface-instrument rounded-2xl p-6 border border-white/10 shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#00F2FE]/10 rounded-full blur-2xl pointer-events-none" />
-            
-            {/* Terminal Header */}
-            <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-4">
-              <div className="flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-[#00F2FE]" />
-                <span className="font-telemetry text-xs text-white font-semibold">LAB TELEMETRY METRICS</span>
-              </div>
-              <span className="badge-telemetry-emerald text-[10px]">VERIFIED</span>
-            </div>
-
-            {/* Metrics List from Profile Data */}
-            <div className="space-y-4 text-left">
-              {profileData.metricsSummary.map((metric, i) => (
-                <div key={i} className="p-3 rounded-lg surface-panel-inset">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-telemetry text-[11px] text-[#94A3B8] uppercase">
-                      {metric.label}
-                    </span>
-                    <span className="font-display text-sm font-semibold text-[#00F2FE]">
-                      {metric.value}
-                    </span>
-                  </div>
-                  <p className="text-xs text-[#94A3B8] leading-tight">
-                    {metric.detail}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {/* Notice / Security boundary */}
-            <div className="mt-5 pt-4 border-t border-white/10 flex items-start gap-2.5">
-              <ShieldCheck className="w-4 h-4 text-[#0AE4BA] shrink-0 mt-0.5" />
-              <p className="text-[11px] text-[#64748B] text-left leading-normal font-telemetry">
-                Public technical disclosure strictly adheres to commercial NDA and DRDO public security boundaries.
-              </p>
-            </div>
-          </div>
-        </div>
+        </motion.div>
 
       </div>
     </section>

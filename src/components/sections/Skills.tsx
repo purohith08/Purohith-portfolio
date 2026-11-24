@@ -18,18 +18,22 @@ export const Skills: React.FC = () => {
             Biomedical Engineering Competencies
           </h2>
         </div>
-        <p className="text-sm text-[#94A3B8] max-w-md mt-4 md:mt-0 font-sans">
+        <p className="text-sm text-[#CBD5E1] max-w-md mt-4 md:mt-0 font-sans">
           Curated matrix across medical imaging standards, signal processing & computational ML, desktop software systems, and embedded firmware.
         </p>
       </div>
 
       {/* Category Tabs */}
-      <div className="flex flex-wrap gap-2 mb-8">
+      <div role="tablist" aria-label="Competency Categories" className="flex flex-wrap gap-2 mb-8">
         {skillsData.map((cat, idx) => (
           <button
             key={idx}
+            type="button"
+            role="tab"
+            aria-selected={activeCategory === idx}
+            aria-controls="skills-panel"
             onClick={() => setActiveCategory(idx)}
-            className={`px-4 py-2 rounded-lg font-display text-xs font-semibold tracking-wide border transition-all cursor-pointer ${
+            className={`px-4 py-2 rounded-lg font-display text-xs font-semibold tracking-wide border transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#00F2FE] ${
               activeCategory === idx
                 ? 'bg-[#00F2FE]/10 border-[#00F2FE] text-[#00F2FE]'
                 : 'surface-panel-inset border-white/5 text-[#94A3B8] hover:border-white/20 hover:text-white'
@@ -41,12 +45,17 @@ export const Skills: React.FC = () => {
       </div>
 
       {/* Active Category Skills Grid */}
-      <div className="surface-instrument rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl text-left">
+      <div 
+        id="skills-panel"
+        role="region"
+        aria-label="Competency Category Details"
+        className="surface-instrument rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl text-left"
+      >
         <div className="mb-6 pb-4 border-b border-white/10">
           <h3 className="font-display text-xl font-bold text-white mb-1">
             {skillsData[activeCategory].category}
           </h3>
-          <p className="text-xs text-[#94A3B8] font-sans">
+          <p className="text-xs text-[#CBD5E1] font-sans">
             {skillsData[activeCategory].description}
           </p>
         </div>
@@ -65,7 +74,7 @@ export const Skills: React.FC = () => {
                   <span className={`text-[10px] font-telemetry px-1.5 py-0.5 rounded ${
                     skill.level === 'Used in a project' 
                       ? 'bg-[#0AE4BA]/10 text-[#0AE4BA] border border-[#0AE4BA]/30'
-                      : 'bg-white/5 text-[#94A3B8]'
+                      : 'bg-white/5 text-[#CBD5E1]'
                   }`}>
                     {skill.level}
                   </span>

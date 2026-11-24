@@ -111,7 +111,7 @@ export const NeuralMesh: React.FC<NeuralMeshProps> = ({
 
   return (
     <group ref={coreRef}>
-      {/* Bio-potential Electrode Nodes - Laser Cyan */}
+      {/* Bio-potential Electrode Nodes - Option 2 Highlight #2A9D8F */}
       <points ref={pointsRef}>
         <bufferGeometry>
           <bufferAttribute
@@ -121,14 +121,14 @@ export const NeuralMesh: React.FC<NeuralMeshProps> = ({
         </bufferGeometry>
         <pointsMaterial
           size={0.13}
-          color="#00F2FE"
+          color="#2A9D8F"
           transparent
           opacity={opacity * 0.9}
           sizeAttenuation
         />
       </points>
 
-      {/* Structural Synaptic & Circuit Geometry */}
+      {/* Structural Synaptic & Circuit Geometry - #2A9D8F / #264653 */}
       <lineSegments ref={linesRef}>
         <bufferGeometry>
           <bufferAttribute
@@ -137,9 +137,9 @@ export const NeuralMesh: React.FC<NeuralMeshProps> = ({
           />
         </bufferGeometry>
         <lineBasicMaterial
-          color="#0AE4BA"
+          color="#2A9D8F"
           transparent
-          opacity={opacity * (0.2 + latticeProgress * 0.25)}
+          opacity={opacity * (0.25 + latticeProgress * 0.25)}
         />
       </lineSegments>
 
@@ -147,7 +147,7 @@ export const NeuralMesh: React.FC<NeuralMeshProps> = ({
       <mesh rotation={[Math.PI / 4, 0, 0]}>
         <torusGeometry args={[1.5, 0.015, 16, 72]} />
         <meshStandardMaterial
-          color="#00F2FE"
+          color="#2A9D8F"
           roughness={0.3}
           metalness={0.8}
           transparent
@@ -155,13 +155,13 @@ export const NeuralMesh: React.FC<NeuralMeshProps> = ({
         />
       </mesh>
 
-      {/* Central Spherical Biosignal Core */}
+      {/* Central Spherical Biosignal Core - Primary Slate #264653 & Highlight Emissive */}
       <mesh>
         <sphereGeometry args={[0.6, 32, 32]} />
         <meshStandardMaterial
-          color="#0F1A2E"
-          emissive="#00F2FE"
-          emissiveIntensity={0.25}
+          color="#264653"
+          emissive="#2A9D8F"
+          emissiveIntensity={0.3}
           roughness={0.2}
           metalness={0.9}
           wireframe

@@ -3,41 +3,38 @@
 @layer base {
   :root {
     /* ========================================================
-       STAGE 1: REFERENCE-INSPIRED SEMANTIC COLOR TOKENS
-       Base: Deep Midnight & Layered Indigo
-       Accents: Muted Berry, Deep Violet, Coral & Periwinkle
-       Signals: Restrained Biomedical Laser Cyan & Precision Teal
+       OPTION 2 ARCHITECTURAL COLOR TOKENS
+       Primary: #264653 (Slate / Deep Slate Teal)
+       Secondary: #E9ECEF (Porcelain / Light Cool Silver)
+       Highlight: #2A9D8F (Persian Green / Surgical Sea Teal)
        ======================================================== */
-    --bg-base: #01040E;
-    --bg-elevated: #050C24;
-    --surface-card: rgba(13, 29, 82, 0.45);
-    --surface-card-hover: rgba(13, 29, 82, 0.75);
-    --surface-panel-inset: rgba(1, 4, 14, 0.65);
+    --bg-base: #0B1317;
+    --bg-elevated: #16272F;
+    --surface-card: rgba(38, 70, 83, 0.35);
+    --surface-card-hover: rgba(38, 70, 83, 0.65);
+    --surface-panel-inset: rgba(11, 19, 23, 0.75);
 
-    /* Text Tokens (Audit WCAG AA: all ≥ 4.5:1 on background and surfaces) */
-    --text-primary: #E9E8EF;     /* 16.8:1 on base, 13.1:1 on indigo */
-    --text-secondary: #A5B4FC;   /* 10.3:1 on base, 8.0:1 on indigo */
-    --text-muted: #8B9CC7;       /* 7.5:1 on base, 5.8:1 on indigo */
-    --text-code: #00F2FE;
+    /* Text Tokens (Strict WCAG AA: all ≥ 4.5:1 on background and surfaces) */
+    --text-primary: #E9ECEF;     /* 15.2:1 on base #0B1317 */
+    --text-secondary: #CED4DA;   /* 11.4:1 on base */
+    --text-muted: #ADB5BD;       /* 7.8:1 on base */
+    --text-code: #2A9D8F;        /* Highlight */
 
-    /* Semantic Accents */
-    --accent-primary: #5B6BA2;   /* Periwinkle Accent */
-    --accent-secondary: #0D1D52; /* Deep Indigo Surface */
-    --accent-magenta: #A40D5A;   /* Muted Berry Accent */
-    --accent-violet: #512544;    /* Deep Violet Accent */
-    --accent-coral: #DA403E;     /* Coral Accent Indicator */
-    --text-coral: #FF6B68;       /* High-contrast coral for text (5.75:1 on surface) */
+    /* Semantic Accents from Palette */
+    --color-primary-slate: #264653;
+    --color-secondary-porcelain: #E9ECEF;
+    --color-highlight-teal: #2A9D8F;
 
-    /* Restrained Biomedical Signal Accents */
-    --signal-cyan: #00F2FE;      /* 14.8:1 on base */
-    --signal-teal: #0AE4BA;      /* 12.5:1 on base */
-    --signal-cobalt: #4E80EE;
+    /* Restrained Signal Tokens */
+    --signal-cyan: #2A9D8F;      /* Highlight Teal */
+    --signal-teal: #2A9D8F;
+    --signal-cobalt: #264653;
 
     /* Border & Focus Tokens */
-    --border-subtle: rgba(91, 107, 162, 0.22);
-    --border-strong: rgba(91, 107, 162, 0.45);
-    --border-glow: rgba(0, 242, 254, 0.35);
-    --focus-ring: #00F2FE;
+    --border-subtle: rgba(233, 236, 239, 0.12);
+    --border-strong: rgba(42, 157, 143, 0.45);
+    --border-glow: rgba(42, 157, 143, 0.35);
+    --focus-ring: #2A9D8F;
 
     /* Typography Stack */
     --font-heading: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -60,13 +57,10 @@
     --radius-full: 9999px;
 
     /* Surface Elevation Shadows */
-    --shadow-card: 0 4px 20px -2px rgba(1, 4, 14, 0.5), 0 0 0 1px var(--border-subtle);
-    --shadow-card-hover: 0 12px 32px -4px rgba(0, 242, 254, 0.12), 0 0 0 1px var(--border-strong);
+    --shadow-card: 0 4px 20px -2px rgba(11, 19, 23, 0.7), 0 0 0 1px var(--border-subtle);
+    --shadow-card-hover: 0 12px 32px -4px rgba(42, 157, 143, 0.22), 0 0 0 1px var(--border-strong);
 
-    /* ========================================================
-       MOTION DESIGN TOKENS
-       Strict durations and easing curves for transitions
-       ======================================================== */
+    /* Motion Tokens */
     --duration-fast: 0.2s;
     --duration-base: 0.5s;
     --duration-slow: 0.9s;
@@ -97,7 +91,7 @@
     outline-offset: 3px;
   }
 
-  /* Scientific instrument scrollbar */
+  /* Scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -106,17 +100,15 @@
     background: var(--bg-base);
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--accent-primary);
+    background: var(--color-primary-slate);
     border-radius: var(--radius-sm);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--text-secondary);
+    background: var(--color-highlight-teal);
   }
 }
 
-/* ========================================================
-   REDUCED MOTION SUPPORT (No JavaScript dependency)
-   ======================================================== */
+/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;
@@ -126,9 +118,7 @@
   }
 }
 
-/* ========================================================
-   TYPOGRAPHY UTILITY CLASSES
-   ======================================================== */
+/* Typography Utility Classes */
 .font-display {
   font-family: var(--font-heading);
   letter-spacing: -0.02em;
@@ -149,22 +139,20 @@
   line-height: 1.15;
 }
 
-/* ========================================================
-   SURFACE CLASSES BOUND TO TOKENS
-   ======================================================== */
+/* Surfaces Bound to Tokens */
 .bg-lab-grid {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(91, 107, 162, 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(91, 107, 162, 0.07) 1px, transparent 1px);
+    linear-gradient(to right, rgba(233, 236, 239, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(233, 236, 239, 0.04) 1px, transparent 1px);
 }
 
 .bg-lab-radial {
-  background: radial-gradient(circle at 50% 0%, rgba(13, 29, 82, 0.5) 0%, rgba(1, 4, 14, 0) 70%);
+  background: radial-gradient(circle at 50% 0%, rgba(38, 70, 83, 0.45) 0%, rgba(11, 19, 23, 0) 70%);
 }
 
 .surface-instrument {
-  background: rgba(13, 29, 82, 0.55);
+  background: rgba(38, 70, 83, 0.45);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-subtle);
@@ -172,7 +160,7 @@
 }
 
 .surface-instrument-card {
-  background: linear-gradient(155deg, rgba(13, 29, 82, 0.6) 0%, rgba(5, 12, 36, 0.75) 100%);
+  background: linear-gradient(155deg, rgba(38, 70, 83, 0.45) 0%, rgba(16, 29, 35, 0.8) 100%);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-subtle);
@@ -193,18 +181,16 @@
   border: 1px solid var(--border-subtle);
 }
 
-/* ========================================================
-   TELEMETRY BADGES
-   ======================================================== */
+/* Telemetry Badges */
 .badge-telemetry {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.05em;
   padding: 0.2rem 0.55rem;
   border-radius: var(--radius-sm);
-  background: rgba(0, 242, 254, 0.08);
-  border: 1px solid rgba(0, 242, 254, 0.28);
-  color: var(--signal-cyan);
+  background: rgba(42, 157, 143, 0.12);
+  border: 1px solid rgba(42, 157, 143, 0.35);
+  color: var(--color-highlight-teal);
 }
 
 .badge-telemetry-emerald {
@@ -213,9 +199,9 @@
   letter-spacing: 0.05em;
   padding: 0.2rem 0.55rem;
   border-radius: var(--radius-sm);
-  background: rgba(10, 228, 186, 0.08);
-  border: 1px solid rgba(10, 228, 186, 0.28);
-  color: var(--signal-teal);
+  background: rgba(42, 157, 143, 0.12);
+  border: 1px solid rgba(42, 157, 143, 0.35);
+  color: var(--color-highlight-teal);
 }
 
 .badge-telemetry-coral {
@@ -224,9 +210,9 @@
   letter-spacing: 0.05em;
   padding: 0.2rem 0.55rem;
   border-radius: var(--radius-sm);
-  background: rgba(218, 64, 62, 0.1);
-  border: 1px solid rgba(218, 64, 62, 0.35);
-  color: var(--text-coral);
+  background: rgba(233, 236, 239, 0.08);
+  border: 1px solid rgba(233, 236, 239, 0.25);
+  color: var(--text-primary);
 }
 
 /* Ambient Pulse Animation */

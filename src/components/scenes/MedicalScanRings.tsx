@@ -37,23 +37,23 @@ export const MedicalScanRings: React.FC<MedicalScanRingsProps> = ({
 
   return (
     <group>
-      {/* Outer Tomographic Gantry Ring - Cyan */}
+      {/* Outer Tomographic Gantry Ring - Highlight #2A9D8F */}
       <mesh ref={outerRingRef} rotation={[Math.PI / 3, 0, 0]}>
         <torusGeometry args={[3.8, 0.015, 16, 96]} />
-        <meshBasicMaterial color="#00F2FE" transparent opacity={opacity * 0.4} />
+        <meshBasicMaterial color="#2A9D8F" transparent opacity={opacity * 0.4} />
       </mesh>
 
-      {/* Secondary CT Slice Ring - Precision Teal */}
+      {/* Secondary CT Slice Ring - Primary Slate #264653 / Highlight */}
       <mesh ref={innerRingRef} rotation={[-Math.PI / 4, Math.PI / 6, 0]}>
         <torusGeometry args={[3.2, 0.012, 16, 80]} />
-        <meshBasicMaterial color="#0AE4BA" transparent opacity={opacity * 0.35} />
+        <meshBasicMaterial color="#2A9D8F" transparent opacity={opacity * 0.35} />
       </mesh>
 
       {/* Volumetric Tomographic Scan Plane Sweep */}
       <mesh ref={scanSweepRef} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.3, 3.6, 48]} />
         <meshBasicMaterial
-          color="#00F2FE"
+          color="#2A9D8F"
           transparent
           opacity={opacity * 0.08}
           side={THREE.DoubleSide}
@@ -67,7 +67,7 @@ export const MedicalScanRings: React.FC<MedicalScanRingsProps> = ({
             <mesh key={i} position={[0, yOffset, 0]} rotation={[-Math.PI / 2, 0, 0]}>
               <planeGeometry args={[4.2, 4.2]} />
               <meshBasicMaterial
-                color={i % 2 === 0 ? '#00F2FE' : '#0AE4BA'}
+                color={i % 2 === 0 ? '#2A9D8F' : '#264653'}
                 transparent
                 opacity={opacity * 0.035}
                 wireframe={false}

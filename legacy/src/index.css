@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-porcelain: #F5F3EE;
+    --color-porcelain-dark: #ECE8E0;
+    --color-ink: #171916;
+    --color-ink-muted: #595D56;
+    --color-ink-subtle: #8A8E85;
+    --color-stone: #D9D5CC;
+    --color-stone-light: #E8E5DD;
+    --color-stone-hairline: rgba(23, 25, 22, 0.08);
+    --color-forest: #315B4C;
+    --color-forest-dark: #234337;
+    --color-copper: #B66B49;
+    --color-white: #FFFFFF;
+    
+    --font-serif: "Newsreader", "Instrument Serif", Georgia, serif;
+    --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-porcelain);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-porcelain);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Refined, quiet architectural scrollbar */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-porcelain);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-stone);
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-ink-subtle);
+  }
+}
+
+/* Editorial Typography Utilities */
+.font-editorial {
+  font-family: var(--font-serif);
+}
+
+.font-editorial-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+.font-tech-mono {
+  font-family: var(--font-mono);
+}
+
+/* Tactile Surface Classes */
+.surface-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-stone);
+  box-shadow: 0 1px 3px 0 rgba(23, 25, 22, 0.03), 0 1px 2px -1px rgba(23, 25, 22, 0.03);
+}
+
+.surface-stone {
+  background: var(--color-porcelain-dark);
+  border: 1px solid var(--color-stone);
+}
+
+.surface-darkroom {
+  background: #111411;
+  color: #F5F3EE;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hairline-b {
+  border-bottom: 1px solid var(--color-stone-hairline);
+}
+
+.hairline-t {
+  border-top: 1px solid var(--color-stone-hairline);
+}
+
+.hairline-r {
+  border-right: 1px solid var(--color-stone-hairline);
+}
+
+.hairline-l {
+  border-left: 1px solid var(--color-stone-hairline);
+}
+
+.hairline-all {
+  border: 1px solid var(--color-stone-hairline);
+}
+
+/* Subtle micro-interactions */
+.interactive-hover {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+
+.interactive-hover:hover {
+  border-color: var(--color-forest);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(23, 25, 22, 0.06);
+}

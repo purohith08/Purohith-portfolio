@@ -64,7 +64,7 @@ export const DICOMViewport: React.FC = () => {
             DICOM Viewport & Multi-Frame Cine Loop
           </h2>
         </div>
-        <p className="text-sm text-[#94A3B8] max-w-md mt-4 md:mt-0 font-sans">
+        <p className="text-sm text-[#CBD5E1] max-w-md mt-4 md:mt-0 font-sans">
           Simulating high-performance C++ Qt desktop viewport architectures: asynchronous multi-frame buffer loading, instantaneous window/level adjustments, and deterministic playback loops.
         </p>
       </div>
@@ -88,8 +88,8 @@ export const DICOMViewport: React.FC = () => {
               <div>FRAME: {String(currentFrame).padStart(2, '0')} / {totalFrames}</div>
             </div>
 
-            <div className="absolute bottom-3 left-4 font-telemetry text-[10px] text-[#64748B] pointer-events-none z-10">
-              FPS: {isPlaying ? '10.0 (CINE)' : '0.0 (PAUSED)'} | QT GLWIDGET PIPELINE
+            <div className="absolute bottom-3 left-4 font-telemetry text-[10px] text-[#94A3B8] pointer-events-none z-10">
+              FPS: {isPlaying ? '10.0 (CINE LOOP)' : '0.0 (PAUSED)'} | QT GLWIDGET PIPELINE
             </div>
 
             {/* Procedural Cross-Sectional CT Anatomy Graphic */}
@@ -139,16 +139,25 @@ export const DICOMViewport: React.FC = () => {
 
             {/* Scrub Slider */}
             <div className="w-full mt-4 z-10 px-4">
+              <label htmlFor="dicom-frame-slider" className="sr-only">
+                DICOM cine slice frame position
+              </label>
               <input
+                id="dicom-frame-slider"
                 type="range"
                 min="1"
                 max={totalFrames}
                 value={currentFrame}
+                aria-label="DICOM cine slice frame position"
+                aria-valuemin={1}
+                aria-valuemax={totalFrames}
+                aria-valuenow={currentFrame}
+                aria-valuetext={`Frame ${currentFrame} of ${totalFrames}`}
                 onChange={(e) => {
                   setIsPlaying(false);
                   setCurrentFrame(Number(e.target.value));
                 }}
-                className="w-full accent-[#00F2FE] cursor-pointer bg-white/10 h-1.5 rounded-lg"
+                className="w-full accent-[#00F2FE] cursor-pointer bg-white/10 h-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00F2FE]"
               />
             </div>
           </div>
@@ -158,13 +167,15 @@ export const DICOMViewport: React.FC = () => {
             
             {/* Playback Controls */}
             <div>
-              <span className="font-telemetry text-xs text-[#94A3B8] uppercase block mb-3">
+              <span className="font-telemetry text-xs text-[#CBD5E1] uppercase block mb-3 font-semibold">
                 Cine Playback Controls
               </span>
               <div className="flex items-center gap-3">
                 <button
+                  type="button"
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg font-display text-xs font-semibold tracking-wider uppercase transition-all cursor-pointer ${
+                  aria-pressed={isPlaying}
+                  className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg font-display text-xs font-semibold tracking-wider uppercase transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00F2FE] ${
                     isPlaying 
                       ? 'bg-[#FF5E7E] text-white shadow-lg shadow-[#FF5E7E]/20' 
                       : 'bg-[#00F2FE] text-[#060911] shadow-lg shadow-[#00F2FE]/20 hover:bg-[#0AE4BA]'
@@ -175,23 +186,25 @@ export const DICOMViewport: React.FC = () => {
                 </button>
 
                 <button
+                  type="button"
                   onClick={() => {
                     setIsPlaying(false);
                     setCurrentFrame(prev => (prev <= 1 ? totalFrames : prev - 1));
                   }}
-                  className="p-2.5 rounded-lg surface-panel-inset text-[#94A3B8] hover:text-white transition-colors"
-                  aria-label="Previous Frame"
+                  className="p-2.5 rounded-lg surface-panel-inset text-[#CBD5E1] hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#00F2FE]"
+                  aria-label="Step to Previous Frame"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
 
                 <button
+                  type="button"
                   onClick={() => {
                     setIsPlaying(false);
                     setCurrentFrame(prev => (prev >= totalFrames ? 1 : prev + 1));
                   }}
-                  className="p-2.5 rounded-lg surface-panel-inset text-[#94A3B8] hover:text-white transition-colors"
-                  aria-label="Next Frame"
+                  className="p-2.5 rounded-lg surface-panel-inset text-[#CBD5E1] hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#00F2FE]"
+                  aria-label="Step to Next Frame"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
@@ -200,22 +213,25 @@ export const DICOMViewport: React.FC = () => {
 
             {/* Window / Level Radiologic Presets */}
             <div>
-              <span className="font-telemetry text-xs text-[#94A3B8] uppercase block mb-3">
+              <span className="font-telemetry text-xs text-[#CBD5E1] uppercase block mb-3 font-semibold">
                 Window / Level Presets (LUT Transform)
               </span>
-              <div className="grid grid-cols-3 gap-2">
+              <div role="radiogroup" aria-label="Window/Level Presets" className="grid grid-cols-3 gap-2">
                 {(Object.keys(presets) as Array<keyof typeof presets>).map((key) => (
                   <button
                     key={key}
+                    type="button"
+                    role="radio"
+                    aria-checked={activePreset === key}
                     onClick={() => setActivePreset(key)}
-                    className={`px-3 py-2 rounded-lg text-xs font-telemetry border text-center transition-all cursor-pointer ${
+                    className={`px-3 py-2 rounded-lg text-xs font-telemetry border text-center transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#00F2FE] ${
                       activePreset === key
                         ? 'bg-[#00F2FE]/10 border-[#00F2FE] text-[#00F2FE]'
-                        : 'surface-panel-inset border-white/5 text-[#94A3B8] hover:border-white/20'
+                        : 'surface-panel-inset border-white/5 text-[#94A3B8] hover:border-white/20 hover:text-white'
                     }`}
                   >
                     <span className="block font-medium">{presets[key].label}</span>
-                    <span className="text-[10px] text-[#64748B] block mt-0.5">{presets[key].window}</span>
+                    <span className="text-[10px] text-[#94A3B8] block mt-0.5">{presets[key].window}</span>
                   </button>
                 ))}
               </div>
@@ -227,7 +243,7 @@ export const DICOMViewport: React.FC = () => {
                 <Monitor className="w-4 h-4 text-[#0AE4BA]" />
                 <span>Qt / C++ Architectural Pattern</span>
               </div>
-              <p className="text-[#94A3B8] leading-relaxed">
+              <p className="text-[#CBD5E1] leading-relaxed">
                 Separates file IO and DICOM header parsing into worker threads, streaming RGBA pixel buffers directly into OpenGL textures without blocking the clinical UI.
               </p>
             </div>
