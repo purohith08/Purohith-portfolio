@@ -115,3 +115,41 @@
    - `oxlint`: 0 warnings, 0 errors.
    - `vite build`: Completed in 829ms with zero errors.
    - Local development server: Active on `http://127.0.0.1:5173/` serving live updated tokens.
+
+---
+
+### Phase 3 — CV Synchronization, Option 2 Palette & Live Production Deployment (November 25, 2026)
+1. **Core Layout & UI Simplification**:
+   - Streamlined the portfolio into 4 clean, focused sections: Hero → 01 Work Experience → 02 Selected Projects → 03 Direct Contact.
+   - Removed top-left monogram box; aligned `S. Purohith` header name at `pt-6 sm:pt-8` matching the top-right `[ MENU = ]` spring drawer button.
+   - Integrated seamless intro entrance directly into the Hero view with zero modal popups or countdown timers.
+2. **Option 2 Color System & motion.dev Physics**:
+   - Implemented Option 2 tokens: `#264653` Primary (Slate), `#E9ECEF` Secondary (Porcelain), and `#2A9D8F` Highlight (Persian Teal).
+   - Procedural 3D scene updated with dark slate and teal lighting; removed floating prism slabs.
+   - Parallax scrolling powered by `useSpring` physics (`stiffness: 130, damping: 28`) across multi-layer foreground and background planes.
+   - Gliding `layoutId="activeFilterPill"` indicator on project domain filter tabs.
+3. **CV Ground-Truth Synchronization (`Purohith_CV.pdf`)**:
+   - **Contact**: Updated professional email to `purohiths.bme@gmail.com`, direct telephony to `+91 79049 82453`, and location to `Trichy, Tamil Nadu – 620004, India` with target objective note (*Seeking healthcare product-development roles in Bangalore*).
+   - **Experience**:
+     - *Freelance Software Developer – Medical Imaging* (Jul 2026 – Oct 2026): DICOM video support (ultrasound cine, XA/XC modalities) with MPEG-2/H.264 decoding, Qt/C++ multi-resolution viewports (1280×1024 to 1080p), URD & SRD authoring with traceability matrix in Excel, SBOM/SOUP audits, ultrasound PACS hybrid codebase, video compression research (MPEG-1/2, H.264/265), and strict-lossless ROI/RONI AWS S3 archival.
+     - *Research Intern — DRDO DEBEL* (Jan 2026 – Mar 2026): Medical device testing, verification, technical documentation, and safety procedures.
+     - *Research Intern — DSU Drone Innovation Centre* (Feb 2025 – Mar 2025): UAV sensor calibration, flight controllers, Drone Engineer on Team ANAV at ISRO Robotic Challenge 2025.
+     - *Biomedical Intern — GVN Riverside Hospital* (Jul 2024 – Aug 2024): Clinical instrumentation calibration and preventive maintenance checklists.
+   - **Projects**:
+     - *Low-Cost Motor Imagery EEG Prosthetic Hand Controller*: Capstone project guided by Dr. N. Shankar using ADS1299, FBCSP, EEGNet, SVM, Raspberry Pi, and Arduino actuation.
+     - *DICOM Cine Workstation & Qt/C++ Medical UI Engineering*: Workstation engineering and regulatory compliance documentation.
+     - *AI-Based Ultrasound Report Generation*: Full-stack medical web application built with FastAPI and React.
+     - *DICOM Video Compression Research & Cloud Archival Strategy*: Transcoding pipelines and ROI/RONI cloud archival benchmarks.
+     - *NIR-DOT Portable Breast Cancer Screening*: ESP32 with BPW34 photodiodes validated on tissue phantoms.
+     - *Ultrasound PACS Platform & Teleradiology Server*: Hybrid C++/Qt and Python platform with automated model-weight synchronisation.
+   - **Academic Background & Credentials**:
+     - B.Tech in Biomedical Engineering (Dhanalakshmi Srinivasan University, May 2026 | CGPA 7.0).
+     - NPTEL Healthcare Entrepreneurship (IIT Madras | Elite, 94%).
+     - Research Publication: *"A Review on Pain Reduction Techniques in Mammography"* (ICMSET 2025, under review).
+     - CodeBind Technologies Full Stack Web Development & Embedded Systems training certifications.
+4. **Deployment & Quality Gates**:
+   - Added `public/.nojekyll` to eliminate Jekyll interference during GitHub Pages deployment.
+   - Updated `package.json` deploy command: `"deploy": "gh-pages -d dist --nojekyll --dotfiles"`.
+   - Ran `oxlint` (0 errors, 0 warnings across 34 files) and production build `tsc -b && vite build` (zero errors).
+   - Fast-forward merged `portfolio-rebuild` into `main` and pushed to `origin/main`.
+   - Deployed to GitHub Pages (`origin/gh-pages`); confirmed live deployment serving updated assets at `https://purohith08.github.io/Purohith-portfolio/`.
