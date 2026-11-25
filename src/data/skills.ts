@@ -13,59 +13,61 @@ export interface SkillCategory {
 export const skillsData: SkillCategory[] = [
   {
     category: "Medical Imaging & Standards",
-    description: "DICOM workflows, medical viewports, format pipelines, and clinical tools",
+    description: "DICOM multi-frame cine loops, format pipelines, PACS protocols, and video compression",
     skills: [
-      { name: "DICOM Workflows", level: "Used in a project", context: "Metadata parsing, multi-frame cine loops, window/level adjustments" },
-      { name: "pydicom", level: "Used in a project", context: "Image array extraction, tag inspection, dataset validation" },
-      { name: "Cornerstone.js", level: "Working knowledge", context: "Web-based medical imaging viewport architecture" },
-      { name: "VTK / DCMTK", level: "Working knowledge", context: "Volumetric rendering concepts and standard imaging toolkits" },
-      { name: "Medical UI Standards", level: "Used in a project", context: "Ergonomic clinical viewports, multi-pane layouts, cine controls" }
+      { name: "DICOM Cine (XA/XC/US)", level: "Used in a project", context: "Multi-frame ultrasound cine loops, X-ray angiography, tag encapsulation" },
+      { name: "Pydicom & VTK", level: "Used in a project", context: "Tag parsing, pixel array extraction, 2D/3D visualization pipelines" },
+      { name: "FFmpeg & Video Transcoding", level: "Used in a project", context: "MPEG-1/2, H.264, H.265 transcoding preserving DICOM metadata" },
+      { name: "ROI-Based Compression", level: "Used in a project", context: "Strict-lossless diagnostic region (JPEG-LS, JPEG 2000, FFV1) with high-ratio peripheral storage" },
+      { name: "OpenCV", level: "Used in a project", context: "Image processing, spatial filtering, and feature extraction" },
+      { name: "PACS Basics & Teleradiology", level: "Used in a project", context: "DICOM query/retrieve workflows, store SCP/SCU, and cloud S3 archival" }
+    ]
+  },
+  {
+    category: "Programming & Frameworks",
+    description: "Native medical desktop viewports, high-performance C++, and asynchronous Python backends",
+    skills: [
+      { name: "C++", level: "Used in a project", context: "Object-oriented native desktop architecture, memory optimization, low-latency loops" },
+      { name: "Qt / PySide6", level: "Used in a project", context: "Custom medical UI viewports, responsive layouts across 1280x1024 to 1080p, Cine Tool controls" },
+      { name: "Python", level: "Used in a project", context: "Compression benchmarking, signal processing pipelines, ML model scripting" },
+      { name: "FastAPI & Django REST", level: "Used in a project", context: "Microservices for AI report generation, PACS backend services, PostgreSQL schemas" },
+      { name: "Embedded C", level: "Used in a project", context: "Microcontroller firmware, timer interrupts, ADC polling, PWM servo kinematics" },
+      { name: "MATLAB", level: "Used in a project", context: "Biosignal analysis, digital filter design, matrix decomposition algorithms" },
+      { name: "JavaScript / React", level: "Used in a project", context: "Web UI dashboards, full-stack ultrasound report interface" }
     ]
   },
   {
     category: "Biosignals & Computational ML",
-    description: "Signal preprocessing, filtering, spatial patterns, and feature pipelines",
+    description: "Motor-imagery decoding, spatial patterns, lightweight neural architectures, and feature pipelines",
     skills: [
-      { name: "EEG Signal Processing", level: "Used in a project", context: "MNE-Python, CSP, FBCSP feature extraction, epoch segmentation" },
-      { name: "sEMG Gait Analysis", level: "Used in a project", context: "Bandpass filtering, full-wave rectification, linear envelopes, NMF" },
-      { name: "Python (NumPy / SciPy)", level: "Used in a project", context: "Digital filter design (Butterworth, Notch), Fourier analysis" },
-      { name: "Machine Learning (SVM)", level: "Used in a project", context: "scikit-learn linear/RBF classifiers, cross-validation, confusion matrices" },
-      { name: "Deep Learning (EEGNet)", level: "Used in a project", context: "Lightweight temporal/spatial convolutions for biosignals" },
-      { name: "MATLAB", level: "Used in a project", context: "Signal processing toolboxes, synergy extraction during DRDO research" }
-    ]
-  },
-  {
-    category: "Core Software & Desktop Systems",
-    description: "Native desktop engineering, performance optimization, and architecture",
-    skills: [
-      { name: "C++", level: "Used in a project", context: "Native application logic, memory safety, object-oriented desktop architecture" },
-      { name: "Qt / Qt Widgets", level: "Used in a project", context: "Custom viewports, event filtering, asynchronous data loading, clinical GUIs" },
-      { name: "Python", level: "Used in a project", context: "Research prototyping, automation, data science pipelines" },
-      { name: "TypeScript / JavaScript", level: "Used in a project", context: "React frontends, dynamic visualization, interactive WebGL" },
-      { name: "Visual Studio Tooling", level: "Used in a project", context: "MSVC compiler configuration, debuggers, profiling workflows" },
-      { name: "SQLite / Relational DB", level: "Used in a project", context: "Schema design, relational constraints, desktop local caching" }
+      { name: "EEG Motor Imagery BCI", level: "Used in a project", context: "Motor-imagery classification for neural prosthetics controller (guide: Dr. N. Shankar)" },
+      { name: "FBCSP (Filter Bank CSP)", level: "Used in a project", context: "Sub-band spatial covariance decomposition and optimal frequency band filtering" },
+      { name: "EEGNet Deep Learning", level: "Used in a project", context: "Compact CNN with depthwise & separable convolutions tailored for EEG" },
+      { name: "Support Vector Machines (SVM)", level: "Used in a project", context: "Supervised trial classification, RBF/linear hyperplanes, cross-validation" },
+      { name: "sEMG Signal Processing", level: "Used in a project", context: "Linear envelopes, motion artifact notch filtering, muscle synergy analysis" },
+      { name: "ADS1299 Acquisition", level: "Used in a project", context: "Low-noise 24-bit delta-sigma bio-potential analog front-end" }
     ]
   },
   {
     category: "Embedded & Hardware Prototyping",
-    description: "Microcontroller firmware, bio-amplifiers, and actuation control",
+    description: "Microcontroller platforms, optical bio-sensing, and multi-servo prosthetic actuation",
     skills: [
-      { name: "ESP32 / FreeRTOS", level: "Used in a project", context: "Multi-threaded acquisition, ADC polling, UART serial telemetry" },
-      { name: "Arduino / C", level: "Used in a project", context: "PWM multi-servo kinematic control, flex sensor integration" },
-      { name: "Raspberry Pi", level: "Working knowledge", context: "Linux single-board computer integration and serial bridging" },
-      { name: "Sensor & ADC Interfacing", level: "Used in a project", context: "Bio-potential electrodes, transimpedance amplification circuits" },
-      { name: "Serial Protocols (UART/I2C/SPI)", level: "Used in a project", context: "Packet validation, ring buffers, deterministic baud transmission" }
+      { name: "ESP32", level: "Used in a project", context: "Dual-core firmware, FreeRTOS tasks, NIR-DOT optical breast cancer screening prototype" },
+      { name: "Arduino & Raspberry Pi", level: "Used in a project", context: "Real-time servo actuation, serial bridging, kinematics for prosthetic hand" },
+      { name: "BPW34 Photodiodes & NIR Optoelectronics", level: "Used in a project", context: "Multi-wavelength optical detection and tissue phantom verification" },
+      { name: "Serial Protocols (UART / SPI / I2C)", level: "Used in a project", context: "Low-latency packet framing, checksum validation, telemetry streaming" },
+      { name: "UAV Flight Controllers & Sensors", level: "Used in a project", context: "Sensor calibration on team ANAV at ISRO Robotic Challenge 2025" }
     ]
   },
   {
-    category: "Web & Modern Tooling",
-    description: "Web development, 3D graphics, version control, and environments",
+    category: "Documentation & Quality Assurance",
+    description: "Medical device requirement traceability, SBOM/SOUP audits, and clinical verification",
     skills: [
-      { name: "React & Vite", level: "Used in a project", context: "Modern component-driven web applications and portfolios" },
-      { name: "Three.js & R3F", level: "Used in a project", context: "Interactive 3D scenes, shaders, spatial data visualization" },
-      { name: "Tailwind CSS", level: "Used in a project", context: "Responsive design systems and customized HUD styling" },
-      { name: "Git & GitHub", level: "Used in a project", context: "Branch workflows, code reviews, open-source repositories" },
-      { name: "Docker", level: "Exploring", context: "Containerized reproducible research environments" }
+      { name: "URD & SRD Authoring", level: "Used in a project", context: "Patient Viewer & Image Viewer numbered requirements and acceptance criteria" },
+      { name: "Test-Case Traceability Matrix", level: "Used in a project", context: "End-to-end URD → SRD → Verification test matrix mapping in Excel" },
+      { name: "SBOM & SOUP Documentation", level: "Used in a project", context: "Software Bill of Materials and Software of Unknown Provenance risk audits" },
+      { name: "Medical Device Verification", level: "Used in a project", context: "Testing protocols and safety procedures at DRDO DEBEL and hospital wards" },
+      { name: "Tools: Git, VS Code, Poetry, Docker", level: "Used in a project", context: "Reproducible developer environments, containerized services, dependency management" }
     ]
   }
 ];

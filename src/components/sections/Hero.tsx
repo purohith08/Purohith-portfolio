@@ -83,10 +83,10 @@ export const Hero: React.FC = () => {
           >
             <div className="pr-4 border-b md:border-b-0 md:border-r border-white/10 pb-4 md:pb-0">
               <span className="font-telemetry text-[11px] font-bold text-[#2A9D8F] tracking-widest uppercase block mb-1">
-                01 / WORKSTATIONS
+                01 / MEDICAL IMAGING & PACS
               </span>
               <p className="font-sans text-xs text-[#CED4DA] leading-relaxed">
-                Medical desktop applications (Qt6 / C++20), multi-threaded DICOM cine rendering, and PACS workflow integration.
+                Multi-frame ultrasound & XA/XC cine loops, MPEG-2/H.264 video decoding, PySide6 / VTK / Pydicom, and Qt/C++ viewports.
               </p>
             </div>
 
@@ -95,16 +95,16 @@ export const Hero: React.FC = () => {
                 02 / BIOSIGNALS & BCI
               </span>
               <p className="font-sans text-xs text-[#CED4DA] leading-relaxed">
-                EEG motor imagery classification (CSP + LDA/SVM), surface EMG neuromuscular synergy decoding, and real-time DSP pipelines.
+                Motor-imagery BCI (FBCSP, EEGNet, SVM) with ADS1299 acquisition, and Raspberry Pi / Arduino prosthetic hand actuation.
               </p>
             </div>
 
             <div>
               <span className="font-telemetry text-[11px] font-bold text-[#CED4DA] tracking-widest uppercase block mb-1">
-                03 / RESEARCH RIGOR
+                03 / RESEARCH & COMPLIANCE
               </span>
               <p className="font-sans text-xs text-[#CED4DA] leading-relaxed">
-                Defense research at DEBEL-DRDO on acoustic impedance & human telemetry; hospital clinical engineering at GVN Riverside.
+                Defense bioengineering at DRDO DEBEL, team ANAV at ISRO Robotic Challenge 2025, and URD → SRD compliance traceability.
               </p>
             </div>
           </div>

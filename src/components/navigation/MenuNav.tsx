@@ -48,9 +48,9 @@ export const MenuNav: React.FC = () => {
   }, [isOpen]);
 
   const navLinks = [
-    { num: '01', label: 'Work Experience', href: '#experience', desc: 'Medical Software (Qt/C++) & DRDO Research' },
-    { num: '02', label: 'Selected Projects', href: '#projects', desc: 'BCI Hand Controller, DICOM Cine, Gait EMG' },
-    { num: '03', label: 'Direct Contact', href: '#contact', desc: 'Direct Inquiries, Location & Verified Nodes' },
+    { num: '01', label: 'Work Experience', href: '#experience', desc: 'Medical Imaging, DRDO DEBEL & ISRO Challenge' },
+    { num: '02', label: 'Selected Projects', href: '#projects', desc: 'BCI Hand Controller, DICOM Cine & AI Reporting' },
+    { num: '03', label: 'Direct Contact', href: '#contact', desc: 'Direct Inquiries, Phone, Email & Location' },
   ];
 
   return (
